@@ -1,0 +1,13 @@
+Dieser Fragebogen ermöglicht eine oberflächliche Einschätzung von Nutzen, Aufwand und Umsetzungsrisiko für den Einsatz von bis zu 19 ausgewählten Machine Learning (ML) Use-Cases im Betrieb von Fernwärmenetzen. Für das Ausfüllen des Fragebogens benötigen Sie etwa 15 Minuten, wobei Sie den Fragebogen jederzeit speichern und später wieder laden können. Weitere Informationen finden Sie bei Bedarf durch die blauen Info-Icons. Der Fragebogen ist wie folgt gegliedert:
+
+             1. Wählen Sie interessante ML-Use-Case-Kategorien aus.
+             2. Nehmen Sie eine persönliche Gewichtung von Bewertungskriterien für den Vergleich
+                von ML-Use-Case-Kategorien vor.
+             3. Beantworten Sie die kategorieübergreifenden Fragen.
+             4. Beantworten Sie für jede ausgewählte Kategorie die kategoriespezifischen Fragen. Dies beinhaltet
+                auch eine persönlichen Gewichtungen von Bewertungskriterien für den Vergleich
+                von ML-Use-Cases innerhalb der jeweiligen Kategorie.
+             5. Die Ergebnisse für den Vergleich der ausgewählten ML-Use-Case-Kategorien werden visualisiert.
+             6. Wählen Sie Kategorien aus der Ergebnisdarstellung aus, um die Use-Case-Vergleiche innerhalb
+                dieser Kategorien zu visualisieren.
+             7. Wählen Sie Use-Cases aus für welche eine Zusammenfassung angezeigt werden werden soll.

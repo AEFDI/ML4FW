@@ -1,0 +1,19 @@
+Im Anschluss an diese Infokachel werden Ihnen 7 Fragen zur Gewichtung von Bewertungskriterien gestellt. Sie können jedem Kriterium ein Gewicht von 1 bis 5 zuweisen, wobei 1 einer niedrigen Relevanz entspricht und 5 einer sehr hohen. Die 7 Kriterien werden am Ende zu den beiden Größen Nutzen und Aufwand zusammengefasst und verwendet, um die gewählten ML Use Case Kategorien zu bewerten.
+Durch Ihre Vorgabe von Gewichten für die 7 Kriterien werden den Größen Nutzen und Aufwand eine individuell auf Sie abgestimmte Bedeutung zugemessen. Nehmen Sie sich deswegen also Zeit für eine gute Abwägung der Gewichtungen. Dabei können Sie jederzeit zwischen den Fragen vor- und zurückspringen. Die Bewertungskriterien lauten:
+
+Kostenaufwand: Voraussichtlicher Aufwand in Form von Kosten für die gesamte Use Case Umsetzung (Teil von Aufwand).
+
+Zeitaufwand: Voraussichtlich benötigte Zeit für die Umsetzung möglicher Use Cases. Diese kann insbesondere durch notwendige Datenerhebungen stark anwachsen (Teil von Aufwand).
+
+Personalaufwand: Personelle Ressourcen, welche für die Use Case Umsetzung voraussichtlich benötigt werden (Teil von Aufwand).
+
+Versorgungssicherheit: Potenzielle Größe des Beitrags eines Use Case zur Versorgungssicherheit im Fernwärmenetz (Teil von Nutzen).
+
+Umweltauswirkungen / Dekarbonisierung: Potenzielle Größe des Beitrags eines Use Case zur Dekarbonisierung des Fernwärmenetzbetriebs (Teil von Nutzen).
+
+Energieeffizienz: Potenzielle Energieeffizienzsteigerung durch einen umgesetzten Use Case (Teil von Nutzen).
+
+Automatisierungsgrad: Grad der Automatisierung eines Use Cases. Diese Größe ist insbesondere für den kontinuierlichen Betrieb einer ML-Lösung nach der ersten Umsetzung relevant (Teil von Nutzen).
+
+Hinweis:
+Zu Beginn jeder ausgewählten Kategorie folgt jeweils eine weitere Kriteriengewichtung. Gehen Sie bitte auch bei diesen Gewichtungen sorgfältig vor und nutzen Sie die Info-Icons für nähere Informationen zur Bedeutung der Kriterien.
