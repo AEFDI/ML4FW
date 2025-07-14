@@ -37,7 +37,7 @@ from typing import List, Dict, Set
 
 base_path: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 result_directory_relative_path: str = os.path.join(os.path.dirname(base_path), "ML4FW_Fragebogen_Ausgaben")
-data_dir_path = os.path.join(base_path, "data")
+data_dir_path = os.path.join(os.path.dirname(base_path), "data")
 predefined_category_ranking_path: str = os.path.join(data_dir_path, "Vordefiniertes_Kategorie_Ranking.csv")
 category_names: List[str] = ["Wärmebedarfsprognose", "Instandhaltung Hausstationen",
                              "Instandhaltung Rohrnetz", "Betriebsstrategien Wärmenetz",

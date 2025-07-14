@@ -57,8 +57,8 @@ Nachteile:
 ## 4. Erstellen einer eigenen exe-Datei
 Analog zu Möglichkeit 3 kann nach der Einrichtung einer Python-Umgebung eine eigene exe-Datei erstellt werden.
 Dafür kann bspw. das Python-Package [pyinstaller](https://pyinstaller.org/en/stable/) genutzt werden. Zum Erstellen der einfachen exe-Datei aus Schritt 1
-kann der Befehl `pyinstaller --onefile --noconsole --add-data "data;data" ML4FW_Fragebogen.py` genutzt werden.
-Für Variante 2 kann der Befehl `pyinstaller --onedir --noconsole --add-data "data;data" ML4FW_Fragebogen.py` verwendet 
+kann der Befehl `pyinstaller --onefile --noconsole --add-data "data;data" --hidden-import "ml4fw_fragebogen" ML4FW_Fragebogen.py` genutzt werden.
+Für Variante 2 kann der Befehl `pyinstaller --onedir --noconsole --add-data "data;data" --hidden-import "ml4fw_fragebogen" ML4FW_Fragebogen.py` verwendet 
 werden.
 
 Vorteil: 
