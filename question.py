@@ -1,5 +1,6 @@
 
 from typing import List, Union, Dict
+
 from settings import min_weight, max_weight
 
 

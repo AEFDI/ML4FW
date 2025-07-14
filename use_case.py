@@ -1,6 +1,7 @@
 from typing import List, Dict
-from question import Question
+
 from condition import Condition
+from question import Question
 
 
 class UseCase:

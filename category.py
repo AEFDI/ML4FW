@@ -1,7 +1,7 @@
 from typing import List, Union, Dict
 
-from settings import category_criteria, global_criteria, preference_category_name, general_category_name
 from question import Question
+from settings import category_criteria, global_criteria, preference_category_name, general_category_name
 from use_case import UseCase
 
 

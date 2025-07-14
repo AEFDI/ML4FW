@@ -33,8 +33,8 @@ Attributes:
     max_pipeline_depth (int): The maximum depth for the pipeline, according to guidelines.
 """
 
-from typing import List, Dict, Set
 import os
+from typing import List, Dict, Set
 
 base_path: str = os.path.dirname(os.path.abspath(__file__))
 result_directory_absolute_path: str = os.path.join(base_path, "ML4FW_Fragebogen_Ausgaben")

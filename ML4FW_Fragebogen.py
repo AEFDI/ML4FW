@@ -1,17 +1,18 @@
 import os
+import pickle as pkl
 from typing import Tuple, List, Dict, Union
+
 import customtkinter as ctk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import pickle as pkl
 
-from questionnaire import Questionnaire
-from question import Question
-from use_case import UseCase
 from category_definition import category_dict
 from info_icon import InfoIcon
+from question import Question
+from questionnaire import Questionnaire
 from settings import risk_colors, result_directory_relative_path, preference_category_name, general_category_name, \
     intro_text, intro_explanation, preference_info_text, option_info
+from use_case import UseCase
 
 
 class ML4FWQuestionnaireApp:

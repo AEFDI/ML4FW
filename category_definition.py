@@ -15,9 +15,9 @@ category_5: Use case category 5 (Betriebsstrategien Hausstationen).
 """
 
 from typing import Dict
-from settings import preference_category_name, general_category_name
+
 from category import Category
-from question_definition import *
+from settings import preference_category_name, general_category_name
 from use_case_definition import *
 
 preferences = Category(name=preference_category_name, color="gray17",

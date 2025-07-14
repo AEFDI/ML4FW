@@ -5,9 +5,10 @@ categories.
 """
 
 from typing import List
+
+from question import Question, generate_preference_questions
 from settings import category_names, global_criteria, category_criteria, min_substations_for_clustering, \
     max_pipeline_depth, category_descriptions, global_criteria_description, category_criteria_description
-from question import Question, generate_preference_questions
 
 init_question = Question(name="Init",
                          question_text="Bitte wählen Sie mindestens eine der folgenden 5 ML-Use-Case-Kategorien. Es "

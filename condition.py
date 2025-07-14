@@ -1,5 +1,6 @@
 
 from typing import List, Dict
+
 from question import Question
 from settings import possible_condition_types
 

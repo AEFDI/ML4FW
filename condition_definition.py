@@ -103,9 +103,8 @@ Defined Conditions:
     Ensures that the data resolution is daily. This makes use cases which need higher resolutions inapplicable.
 """
 
-from settings import min_substations_for_clustering
-from question_definition import *
 from condition import Condition
+from question_definition import *
 
 no_flow_rate_condition = Condition(condition_type="data availability",
                                    question_answer_list=[{gen_flow_rate_1.question_text: "Nein"},

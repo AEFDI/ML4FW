@@ -1,5 +1,5 @@
-from use_case import UseCase
 from condition_definition import *
+from use_case import UseCase
 
 """
 Script for defining all use cases and assigning predefined score values, conditions and detail information.

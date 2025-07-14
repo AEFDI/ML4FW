@@ -3,12 +3,12 @@ from typing import List, Union, Dict
 
 import pandas as pd
 
-from settings import preference_category_name, general_category_name, \
-    global_criteria_mapping, predefined_category_ranking_path
 from category import Category
+from category_definition import preferences, general_questions
 from question import Question
 from question_definition import init_question
-from category_definition import preferences, general_questions
+from settings import preference_category_name, general_category_name, \
+    global_criteria_mapping, predefined_category_ranking_path
 from use_case import UseCase
 
 
