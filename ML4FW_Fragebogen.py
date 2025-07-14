@@ -1,5 +1,5 @@
 import os
-from typing import Tuple, List, Union
+from typing import Tuple, List, Dict, Union
 import customtkinter as ctk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -46,9 +46,9 @@ class ML4FWQuestionnaireApp:
         long_wrap_length (int): Wrap length for long text.
         middle_wrap_length (int): Wrap length for medium text.
         short_wrap_length (int): Wrap length for short text.
-        big_headline_font (tuple): Font settings for big headlines.
-        head_line_font (tuple): Font settings for regular headlines.
-        plain_text_font (tuple): Font settings for plain text.
+        big_headline_font (Tuple[str, int, str]): Font settings for big headlines (e.g. ("arial", 18, "bold")).
+        head_line_font (Tuple[str, int, str]): Font settings for regular headlines (e.g. ("arial", 18, "bold")).
+        plain_text_font (Tuple[str, int, str]): Font settings for plain text (e.g. ("arial", 18, "bold")).
         icon_size (int): Size of info icons.
         info_window_open (bool): Flag to indicate if an info window is open.
         init_options (bool): Flag to indicate if options have been initialized.
@@ -77,33 +77,33 @@ class ML4FWQuestionnaireApp:
         add_use_case_plot(category_name): Adds the use case plot for a specific category.
     """
 
-    def __init__(self, master) -> None:
+    def __init__(self, master: ctk.CTk) -> None:
         """ Initializes the ML4FWQuestionnaireApp and sets up the GUI layout. """
         # GUI text settings
-        self.win_height = 900
-        self.win_width = int(self.win_height / 1.3)
-        self.y_offset = 0
-        self.x_offset = 100
-        self.window_geometry = f"{self.win_width}x{self.win_height}+{self.x_offset}+{self.y_offset}"
-        self.secondary_window_geometry = f"{self.win_width}x{self.win_height}+{self.x_offset + 100}+" \
-                                         f"{self.y_offset + 100}"
-        self.big_frame_width = self.win_width - 100
-        self.big_frame_height = self.win_height - 100
-        self.middle_frame_width = 400  # Introduced for question body
-        self.middle_frame_height = 300  # Introduced for question body
-        self.small_frame_width = 400  # Introduced for headlines
-        self.small_frame_height = 75  # Introduced for headlines
-        self.long_wrap_length = self.big_frame_width
-        self.middle_wrap_length = self.middle_frame_width
-        self.short_wrap_length = 200  # introduced for tables
-        self.big_headline_font = ("Arial", 18, "bold")
-        self.head_line_font = ("Arial", 14, "bold")
-        self.plain_text_font = ("Arial", 12)
-        self.icon_size = 20  # Size of info icons
+        self.win_height: int = 900
+        self.win_width: int = int(self.win_height / 1.3)
+        self.y_offset: int = 0
+        self.x_offset: int = 100
+        self.window_geometry: str = f"{self.win_width}x{self.win_height}+{self.x_offset}+{self.y_offset}"
+        self.secondary_window_geometry: str = f"{self.win_width}x{self.win_height}+{self.x_offset + 100}+" \
+                                              f"{self.y_offset + 100}"
+        self.big_frame_width: int = self.win_width - 100
+        self.big_frame_height: int = self.win_height - 100
+        self.middle_frame_width: int = 400  # Introduced for question body
+        self.middle_frame_height: int = 300  # Introduced for question body
+        self.small_frame_width: int = 400  # Introduced for headlines
+        self.small_frame_height: int = 75  # Introduced for headlines
+        self.long_wrap_length: int = self.big_frame_width
+        self.middle_wrap_length: int = self.middle_frame_width
+        self.short_wrap_length: int = 200  # introduced for tables
+        self.big_headline_font: Tuple[str, int, str] = ("Arial", 18, "bold")
+        self.head_line_font: Tuple[str, int, str] = ("Arial", 14, "bold")
+        self.plain_text_font: Tuple[str, int, str] = ("Arial", 12, "normal")
+        self.icon_size: int = 20  # Size of info icons
 
-        self.questionnaire = None
+        self.questionnaire: Union[Questionnaire, None] = None
 
-        self.master = master
+        self.master: ctk.CTk = master
         self.master.title("Fragebogen Machine Learning Use-Cases im Betrieb von Fernwärmenetzen")
         self.master.geometry(self.window_geometry)
 
@@ -152,7 +152,7 @@ class ML4FWQuestionnaireApp:
                                                    wraplength=self.long_wrap_length,
                                                    font=self.plain_text_font)
         self.load_path_box = ctk.CTkEntry(self.start_menu_frame, width=self.long_wrap_length)
-        self.load_path_box_packed = False
+        self.load_path_box_packed: bool = False
         self.load_button = ctk.CTkButton(self.start_menu_frame, text="Laden",
                                          command=self.load_questionnaire)
         self.loading_error_label = ctk.CTkLabel(self.start_menu_frame,
@@ -162,7 +162,7 @@ class ML4FWQuestionnaireApp:
                                                 wraplength=self.long_wrap_length,
                                                 font=self.plain_text_font,
                                                 text_color="red")
-        self.loading_error_label_packed = False
+        self.loading_error_label_packed: bool = False
         self.start_menu_close_button = ctk.CTkButton(self.start_menu_frame, text="Anwendung schließen",
                                                      command=self.quit_application)
 
@@ -220,7 +220,7 @@ class ML4FWQuestionnaireApp:
         # Init question frame and widgets
         self.question_frame = ctk.CTkFrame(master, width=self.big_frame_width, height=self.big_frame_height)
         self.question_frame.pack_propagate(False)
-        self.question_check_boxes = []
+        self.question_check_boxes: List[Union[ctk.CTkCheckBox, ctk.CTkRadioButton]] = []
         self.question_check_box_frame = ctk.CTkFrame(self.question_frame, width=self.middle_frame_width,
                                                      height=self.middle_frame_height)
         self.question_label = ctk.CTkLabel(self.question_frame, text="", wraplength=self.long_wrap_length,
@@ -238,7 +238,7 @@ class ML4FWQuestionnaireApp:
                                                    command=self.quit_application)
         self.question_progress_label = ctk.CTkLabel(self.question_frame, text="", wraplength=self.long_wrap_length,
                                                     font=self.plain_text_font)
-        self.tooltip = None
+        self.tooltip: Union[ctk.CTkLabel, None] = None
 
         # Init completion frame and widgets
         self.completion_frame = ctk.CTkFrame(master, width=self.big_frame_width, height=self.big_frame_height)
@@ -264,9 +264,9 @@ class ML4FWQuestionnaireApp:
                                                      font=self.plain_text_font)
         self.category_back_button = ctk.CTkButton(self.category_result_frame, text="Zurück",
                                                   command=self.category_result_back_pressed)
-        self.category_scatters = []
-        self.category_figure = None
-        self.category_canvas = None
+        self.category_scatters: List[Dict[str, plt.Axes]] = []
+        self.category_figure: Union[plt.Axes, None] = None
+        self.category_canvas: Union[ctk.CTkCanvas, None] = None
         self.save_category_button = ctk.CTkButton(self.category_result_frame, text="Grafik speichern",
                                                   command=lambda: self.save_category_plot(
                                                       frame=self.category_result_frame))
@@ -276,20 +276,22 @@ class ML4FWQuestionnaireApp:
                                                           command=self.quit_application)
 
         # Init use case result frame and widgets
-        self.use_case_result_frame = None  # will be initialized in a new window in display_use_case_results
-        self.use_case_plot_info_label = None
-        self.use_case_scatters = []
-        self.use_case_figure = None
-        self.use_case_canvas = None
-        self.save_use_case_button = None  # will be overwritten in add_use_case_plot depending on the category
-        self.use_case_result_close_button = None
+        # These variables will be initialized in a new window in display_use_case_results
+        self.use_case_result_frame: Union[ctk.CTkFrame, None] = None
+        self.use_case_plot_info_label: Union[ctk.CTkLabel, None] = None
+        self.use_case_scatters: List[Dict[str, plt.Axes]] = []
+        self.use_case_figure: Union[plt.Axes, None] = None
+        self.use_case_canvas: Union[ctk.CTkCanvas, None] = None
+        # save_use_case_button be overwritten in add_use_case_plot depending on the category
+        self.save_use_case_button: Union[ctk.CTkButton, None] = None
+        self.use_case_result_close_button: Union[ctk.CTkButton, None] = None
 
         if not os.path.isdir(result_directory_relative_path):
             os.mkdir(result_directory_relative_path)
 
-        self.info_window_open = False
-        self.init_options = True
-        self.active_use_case_window = None
+        self.info_window_open: bool = False
+        self.init_options: bool = True
+        self.active_use_case_window: Union[ctk.CTkFrame, None] = None
         self.display_start_screen()
 
     # Display frames
@@ -489,9 +491,10 @@ class ML4FWQuestionnaireApp:
                                                           "erhalten.", wraplength=self.long_wrap_length,
                                                      font=self.plain_text_font)
         self.use_case_plot_info_label.pack(pady=20)
+        args = {"category_name": category_name, "frame": self.use_case_result_frame}
         self.save_use_case_button = ctk.CTkButton(self.use_case_result_frame, text="Grafik speichern",
-                                                  command=lambda: self.save_use_case_plot(category_name=category_name,
-                                                                                          frame=self.use_case_result_frame))
+                                                  command=lambda: self.save_use_case_plot(**args)
+                                                  )
         self.save_use_case_button.pack(pady=20)
         self.use_case_result_close_button = ctk.CTkButton(self.use_case_result_frame, text="Fenster schließen",
                                                           command=new_window.destroy)
@@ -799,7 +802,15 @@ class ML4FWQuestionnaireApp:
         return answer_given
 
     def show_tooltip(self, event, master: ctk.CTkFrame, x_pos: int, y_pos: int, text: str) -> None:
-        """ Shows the tooltip when hovering over the question_progress_label. """
+        """ Shows the tooltip when hovering over the question_progress_label.
+
+        Args:
+            event: unused parameter, it is just here because the bind functions of a CTkLabel provides this parameter.
+            master (ctk.CTkFrame): Frame where the tooltip will be displayed.
+            x_pos (int): x position of the tooltip placement.
+            y_pos (int): y position of the tooltip placement.
+            text (str): Text of the tooltip.
+        """
         if self.tooltip is not None:
             return
 
@@ -808,7 +819,11 @@ class ML4FWQuestionnaireApp:
         self.tooltip.place(x=x_pos, y=y_pos)
 
     def hide_tooltip(self, event) -> None:
-        """ Hides the tooltip when the mouse leaves the question_progress_label. """
+        """ Hides the tooltip when the mouse leaves the question_progress_label.
+
+        Args:
+            event: unused parameter, it is just here because the bind functions of a CTkLabel provides this parameter.
+        """
         if self.tooltip is not None:
             self.tooltip.after(500, self.tooltip.destroy)
             self.tooltip = None
@@ -921,12 +936,12 @@ class ML4FWQuestionnaireApp:
                 widget.destroy()
             self.question_check_boxes = []
 
-    def create_check_boxes(self, question: Question, selected_answer: Union[str, list, None]) -> None:
+    def create_check_boxes(self, question: Question, selected_answer: Union[str, List[str], None]) -> None:
         """ Creates checkboxes or radio buttons for the answers of the current question.
 
         Args:
             question (Question): The current question object.
-            selected_answer (Union[str, list, None]): The selected answer or answers.
+            selected_answer (Union[str, List[str], None]): The selected answer or answers.
         """
         if question.multiple_choice:
             if selected_answer is not None:
@@ -944,23 +959,24 @@ class ML4FWQuestionnaireApp:
             else:
                 self.single_choice_option = ctk.StringVar(value="")
             for option in question.options:
-                radio = ctk.CTkRadioButton(self.question_check_box_frame, text=option,
-                                           variable=self.single_choice_option, value=option)
-                self.question_check_boxes.append(radio)
-                radio.pack(anchor='w')
+                radio_button = ctk.CTkRadioButton(self.question_check_box_frame, text=option,
+                                                  variable=self.single_choice_option, value=option)
+                self.question_check_boxes.append(radio_button)
+                radio_button.pack(anchor='w')
 
-    def toggle_option(self, option) -> None:
+    def toggle_option(self, option: str) -> None:
         """ Toggles an option in the multiple-choice checkboxes.
 
         Args:
-            option: The option to be toggled.
+            option (str): The option to be toggled.
         """
         if option in self.multiple_choice_options:
             self.multiple_choice_options.remove(option)
         else:
             self.multiple_choice_options.append(option)
 
-    def scatter_plot(self, is_category: bool, category_name: str = None) -> Tuple[plt.Figure, plt.Axes, List[dict]]:
+    def scatter_plot(self, is_category: bool, category_name: str = None
+                     ) -> Tuple[plt.Figure, plt.Axes, List[Dict[str, plt.Axes]]]:
         """ Creates a scatter plot for categories or use cases. Displays potential ("Nutzen") on the y-axis,
         effort ("Aufwand") on the x-axis and risk ("Risiko") as the color of the scatter points.
 
@@ -969,8 +985,8 @@ class ML4FWQuestionnaireApp:
             category_name (str, optional): The name of the category (only expected if is_category=False).
 
         Returns:
-            Tuple[plt.Figure, plt.Axes, List[dict]]: The Figure and Axes objects, as well as the list of scatter
-                objects.
+            Tuple[plt.Figure, plt.Axes, List[Dict[str, plt.Axes]]]: The Figure and Axes objects, as well as the list of
+                scatter objects.
         """
         if is_category:
             score_dict = self.questionnaire.final_category_scores
@@ -1029,8 +1045,9 @@ class ML4FWQuestionnaireApp:
         self.use_case_scatters = scatter_list
         self.use_case_figure = figure  # assign figure to use_case_figure for the save plot function
         self.use_case_canvas = FigureCanvasTkAgg(figure=self.use_case_figure, master=self.use_case_result_frame)
-        self.use_case_canvas.mpl_connect("button_press_event", lambda x: self.on_graphic_clicked(x, is_category=False,
-                                                                                                 category_name=category_name))
+        args = {"is_category": False, "category_name": category_name}
+        self.use_case_canvas.mpl_connect("button_press_event", lambda x: self.on_graphic_clicked(x, **args)
+                                         )
         self.use_case_canvas.get_tk_widget().pack(pady=20)
         # Show the plot
         self.use_case_canvas.draw()

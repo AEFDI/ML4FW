@@ -1,5 +1,5 @@
 
-from typing import List, Union
+from typing import List, Union, Dict
 from settings import min_weight, max_weight
 
 
@@ -9,35 +9,36 @@ class Question:
     Args:
         name (str): The unique identifier for the question.
         question_text (str): The text of the question to be displayed to the user.
-        options (list): A list of possible answers for the question (str).
+        options (List[str]): A list of possible answers for the question.
         multiple_choice (bool): Indicates whether the question allows multiple answers.
         question_types (List[str]): A list of types that classify the question. Possible types are: Preference,
                 Specification, Potential, Effort, Risk
-        answer_mapping (dict, optional): A mapping of answers to numerical values.
+        answer_mapping (Dict[str, int], optional): A mapping of answers to numerical values.
         criteria (str, optional): The criteria associated with the question.
-        consequence_triggers (dict, optional): A mapping of answers to consequence question names.
-        description_text (str): Additional description text.
-        consequence_description (str): description text for the question consequences displayed together with other
-            question info.
-        reason_to_exist (str): description text that answers why the question is asked.
+        consequence_triggers (Dict[str, str], optional): A mapping of answers to consequence question names.
+        description_text (str, optional): Additional description text.
+        consequence_description (str, optional): description text for the question consequences displayed together with
+            other question info.
+        reason_to_exist (str, optional): description text that answers why the question is asked.
     """
-    def __init__(self, name: str, question_text: str, options: list, multiple_choice: bool, question_types: List[str],
-                 answer_mapping: dict = None, criteria: str = None, consequence_triggers: dict = None,
-                 description_text: str = None, consequence_description: str = None, reason_to_exist: str = None):
+    def __init__(self, name: str, question_text: str, options: List[str], multiple_choice: bool,
+                 question_types: List[str], answer_mapping: Dict[str, int] = None, criteria: str = None,
+                 consequence_triggers: Dict[str, str] = None, description_text: str = None,
+                 consequence_description: str = None, reason_to_exist: str = None):
         """ Initializes the Question object with the provided parameters. """
-        self.name = name
-        self.question_text = question_text
-        self.options = options
-        self.multiple_choice = multiple_choice
-        self.type = question_types
-        self.answer = None
-        self.answer_mapping = answer_mapping
-        self.value = None
-        self.criteria = criteria
-        self.consequence_triggers = consequence_triggers
-        self.description_text = description_text
-        self.consequence_description = consequence_description
-        self.reason_to_exist = reason_to_exist
+        self.name: str = name
+        self.question_text: str = question_text
+        self.options: List[str] = options
+        self.multiple_choice: bool = multiple_choice
+        self.type: List[str] = question_types
+        self.answer: Union[str, None] = None
+        self.answer_mapping: Dict[str, int] = answer_mapping
+        self.value: Union[float, None] = None
+        self.criteria: str = criteria
+        self.consequence_triggers: Dict[str, str] = consequence_triggers
+        self.description_text: str = description_text
+        self.consequence_description: str = consequence_description
+        self.reason_to_exist: str = reason_to_exist
 
     def set_answer(self, answer: Union[str, list]) -> None:
         """ Sets the answer for the question and updates its value based on the answer mapping.
@@ -89,13 +90,13 @@ class Question:
         return info_text
 
 
-def generate_preference_questions(criteria_list: list, criteria_description: dict) -> List[Question]:
+def generate_preference_questions(criteria_list: List[str], criteria_description: Dict[str, str]) -> List[Question]:
     """ Generates a list of preference questions based on the provided criteria. This function is used for global and
     local criteria question definition.
 
     Args:
-        criteria_list (list): A list of criteria for which preference questions will be generated.
-        criteria_description (dict): Dictionary containing a description text (str) for every criteria from
+        criteria_list (List[str]): A list of criteria for which preference questions will be generated.
+        criteria_description (Dict[str, str]): Dictionary containing a description text (str) for every criterion from
             criteria_list.
     Returns:
         List[Question]: A list of Question objects representing preference questions.

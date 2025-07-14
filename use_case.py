@@ -8,8 +8,8 @@ class UseCase:
 
     Args:
         name (str): The name of the use case.
-        predefined_potential (dict): A dictionary containing predefined potential values for the use case.
-        predefined_effort (dict): A dictionary containing predefined effort values for the use case.
+        predefined_potential (Dict[str, int]): A dictionary containing predefined potential values for the use case.
+        predefined_effort (Dict[str, int]): A dictionary containing predefined effort values for the use case.
         predefined_risk_value (int): The predefined risk value associated with the use case.
         non_applicability_conditions (List[Condition]): A list of conditions under which the use case is considered not
             applicable.
@@ -39,22 +39,23 @@ class UseCase:
         get_data_availability_questions():
             Retrieves a list of question texts related to data availability and labeling conditions.
     """
-    def __init__(self, name: str, predefined_potential: dict, predefined_effort: dict,
+
+    def __init__(self, name: str, predefined_potential: Dict[str, int], predefined_effort: Dict[str, int],
                  predefined_risk_value: int, non_applicability_conditions: List[Condition],
                  pro_contra_arguments: Dict[str, list], literature_source: str, description: str):
         """ Initializes the UseCase object and its attributes. """
-        self.name = name
-        self.description = description
-        self.predefined_potential = predefined_potential
-        self.predefined_effort = predefined_effort
-        self.predefined_risk_value = predefined_risk_value
-        self.non_applicability_conditions = non_applicability_conditions
-        self.literature_source = literature_source
-        self.pro_contra_arguments = pro_contra_arguments
+        self.name: str = name
+        self.description: str = description
+        self.predefined_potential: Dict[str, int] = predefined_potential
+        self.predefined_effort: Dict[str, int] = predefined_effort
+        self.predefined_risk_value: int = predefined_risk_value
+        self.non_applicability_conditions: List[Condition] = non_applicability_conditions
+        self.literature_source: str = literature_source
+        self.pro_contra_arguments: Dict[str, list] = pro_contra_arguments
 
         # Applicability attributes will be set after the questions in questionnaire have been evaluated
-        self.is_applicable = None
-        self.reasons_for_non_applicability = []
+        self.is_applicable: bool = False
+        self.reasons_for_non_applicability: List[List[Dict[str, str]]] = []
 
     def get_effort(self, effort_questions: List[Question]) -> float:
         """ Combines the predefined effort values with the answers to the effort questions into a total effort value.
@@ -86,11 +87,11 @@ class UseCase:
                 weighted_effort += max((self.predefined_effort[key] / 5) * effort_question_value, 1)
         return weighted_effort / len(self.predefined_effort)
 
-    def get_potential(self, local_criteria_weights: dict) -> float:
+    def get_potential(self, local_criteria_weights: Dict[str, int]) -> float:
         """ Calculates the weighted potential of the use case based on local criteria weights.
 
         Args:
-            local_criteria_weights (dict): A dictionary containing the weights for local criteria.
+            local_criteria_weights (Dict[str, int]): A dictionary containing the weights for local criteria.
 
         Returns:
             float: The calculated potential value for the use case.
@@ -111,7 +112,7 @@ class UseCase:
         """
         return (category_risk + self.predefined_risk_value) / 2
 
-    def is_not_applicable(self, all_category_questions: List[Question]) -> None:
+    def is_not_applicable(self, all_category_questions: List[Question]) -> bool:
         """ Checks if the use case is not applicable based on its non-applicability conditions.
 
         Args:
@@ -147,11 +148,11 @@ class UseCase:
         Returns:
             List[str]: A list of question texts pertaining to data availability conditions.
         """
-        data_conditions = [x for x in self.non_applicability_conditions
-                           if x.condition_type == "data availability"]
-        label_conditions = [x for x in self.non_applicability_conditions
-                            if x.condition_type == "label availability"]
-        question_list = []
+        data_conditions: List[Condition] = [x for x in self.non_applicability_conditions
+                                            if x.condition_type == "data availability"]
+        label_conditions: List[Condition] = [x for x in self.non_applicability_conditions
+                                             if x.condition_type == "label availability"]
+        question_list: List[str] = []
         for condition in data_conditions + label_conditions:
             question_list += [list(x.keys())[0] for x in condition.question_answer_list]
         return question_list

@@ -4,10 +4,10 @@ This script sets the question texts, answers, question types, and organizes ques
 categories.
 """
 
+from typing import List
 from settings import category_names, global_criteria, category_criteria, min_substations_for_clustering, \
     max_pipeline_depth, category_descriptions, global_criteria_description, category_criteria_description
 from question import Question, generate_preference_questions
-
 
 init_question = Question(name="Init",
                          question_text="Bitte wählen Sie mindestens eine der folgenden 5 ML-Use-Case-Kategorien. Es "
@@ -425,31 +425,35 @@ gen_pressure_3 = Question(name="Druckdaten erheben",
                           consequence_description=data_3_consequence,
                           reason_to_exist=data_3_reason_to_exist
                           )
-gen_default_questions = [gen_digital_data, gen_data_history, gen_data_resolution, gen_continual_operation,
-                         gen_ambient_temp_1, gen_flow_rate_1, gen_supply_and_return_temperature_1,
-                         gen_network_temperature_1, gen_energy_1,
-                         gen_heat_1, gen_pressure_1, gen_weather_forecast_1]
-gen_consequence_questions = [gen_data_storage, gen_ambient_temp_2, gen_ambient_temp_3, gen_flow_rate_2,
-                             gen_flow_rate_3, gen_supply_and_return_temperature_2, gen_supply_and_return_temperature_2,
-                             gen_supply_and_return_temperature_3, gen_network_temperature_2,
-                             gen_network_temperature_3, gen_energy_2, gen_energy_3, gen_heat_2, gen_heat_3,
-                             gen_pressure_2, gen_pressure_3, gen_weather_forecast_2]
+gen_default_questions: List[Question] = [gen_digital_data, gen_data_history, gen_data_resolution,
+                                         gen_continual_operation,
+                                         gen_ambient_temp_1, gen_flow_rate_1, gen_supply_and_return_temperature_1,
+                                         gen_network_temperature_1, gen_energy_1,
+                                         gen_heat_1, gen_pressure_1, gen_weather_forecast_1]
+gen_consequence_questions: List[Question] = [gen_data_storage, gen_ambient_temp_2, gen_ambient_temp_3, gen_flow_rate_2,
+                                             gen_flow_rate_3, gen_supply_and_return_temperature_2,
+                                             gen_supply_and_return_temperature_2,
+                                             gen_supply_and_return_temperature_3, gen_network_temperature_2,
+                                             gen_network_temperature_3, gen_energy_2, gen_energy_3, gen_heat_2,
+                                             gen_heat_3,
+                                             gen_pressure_2, gen_pressure_3, gen_weather_forecast_2]
 
 # category 1 questions
-global_preference_questions = generate_preference_questions(criteria_list=global_criteria,
-                                                            criteria_description=global_criteria_description)
+global_preference_questions: List[Question] = generate_preference_questions(criteria_list=global_criteria,
+                                                                            criteria_description=global_criteria_description)
 
 # category 1 questions
-category_name = category_names[0]
-cat_1_local_preference_questions = generate_preference_questions(criteria_list=category_criteria[category_name],
-                                                                 criteria_description=category_criteria_description[
-                                                                     category_name])
-risk_1_description = "Diese Frage dient zur Einschätzung, ob die Frage nach Nutzungsrechten"\
-                    "für Daten bereits geklärt ist. Falls Sie nicht definitiv wissen, dass "\
-                    "Sie die notwendigen Nutzungsrechte an den Daten haben, antworten Sie "\
-                    "mit 'Nein'."
-risk_2_description = "Diese Frage dient zur Einschätzung, ob gegenüber einer anderen Partei verpflichtet sind"\
-                    "Ihren Umgang mit Daten transparent zu gestalten und offen zu legen. Falls Sie nicht definitiv " \
+category_name: str = category_names[0]
+cat_1_local_preference_questions: List[Question] = generate_preference_questions(
+    criteria_list=category_criteria[category_name],
+    criteria_description=category_criteria_description[
+        category_name])
+risk_1_description = "Diese Frage dient zur Einschätzung, ob die Frage nach Nutzungsrechten" \
+                     "für Daten bereits geklärt ist. Falls Sie nicht definitiv wissen, dass " \
+                     "Sie die notwendigen Nutzungsrechte an den Daten haben, antworten Sie " \
+                     "mit 'Nein'."
+risk_2_description = "Diese Frage dient zur Einschätzung, ob gegenüber einer anderen Partei verpflichtet sind" \
+                     "Ihren Umgang mit Daten transparent zu gestalten und offen zu legen. Falls Sie nicht definitiv " \
                      "wissen, dass dies nicht notwendigen ist antworten Sie mit 'Ja'."
 risk_3_description = "Auch wenn das Nutzungsrecht für die Daten geklärt ist, kann es zu Widerständen gegen die " \
                      "Einführung von ML Use Cases kommen. Dabei kann es sich im unternehmensinterne Widerstände" \
@@ -590,15 +594,17 @@ cat_1_heat_storages_data_2 = Question(name="Wärmespeicherdaten erheben",
                                                       "benötigen."
                                       )
 
-cat_1_default_questions = [cat_1_access_rights, cat_1_transparency, cat_1_resistance, cat_1_confidential,
-                           cat_1_valve_data_1, cat_1_building_data, cat_1_heat_storages_data_1]
-cat_1_consequence_questions = [cat_1_valve_data_2, cat_1_heat_storages_data_2]
+cat_1_default_questions: List[Question] = [cat_1_access_rights, cat_1_transparency, cat_1_resistance,
+                                           cat_1_confidential,
+                                           cat_1_valve_data_1, cat_1_building_data, cat_1_heat_storages_data_1]
+cat_1_consequence_questions: List[Question] = [cat_1_valve_data_2, cat_1_heat_storages_data_2]
 
 # category 2 questions
-category_name = category_names[1]
-cat_2_local_preference_questions = generate_preference_questions(criteria_list=category_criteria[category_name],
-                                                                 criteria_description=category_criteria_description[
-                                                                     category_name])
+category_name: str = category_names[1]
+cat_2_local_preference_questions: List[Question] = generate_preference_questions(
+    criteria_list=category_criteria[category_name],
+    criteria_description=category_criteria_description[
+        category_name])
 cat_2_access_rights = Question(name="Zugriffsrechte",
                                question_text="Haben Sie die notwendigen Rechte, Betriebsdaten von Hausstationen "
                                              "sammeln und analysieren zu können?",
@@ -724,15 +730,17 @@ cat_2_labels_3 = Question(name="Labels HAST Art",
                                                   "Berichten steigt der Datenerhebungsaufwand mäßig.",
                           reason_to_exist="Einschätzung des Datenerhebungsaufwands."
                           )
-cat_2_default_questions = [cat_2_access_rights, cat_2_transparency, cat_2_resistance, cat_2_confidential,
-                           cat_2_substation_amount, cat_2_labels_1]
-cat_2_consequence_questions = [cat_2_labels_2, cat_2_labels_3]
+cat_2_default_questions: List[Question] = [cat_2_access_rights, cat_2_transparency, cat_2_resistance,
+                                           cat_2_confidential,
+                                           cat_2_substation_amount, cat_2_labels_1]
+cat_2_consequence_questions: List[Question] = [cat_2_labels_2, cat_2_labels_3]
 
 # category 3 questions
 category_name = category_names[2]
-cat_3_local_preference_questions = generate_preference_questions(criteria_list=category_criteria[category_name],
-                                                                 criteria_description=category_criteria_description[
-                                                                     category_name])
+cat_3_local_preference_questions: List[Question] = generate_preference_questions(
+    criteria_list=category_criteria[category_name],
+    criteria_description=category_criteria_description[
+        category_name])
 cat_3_risk_question_1 = Question(name="Zugriffsrechte",
                                  question_text="Haben Sie die notwendigen Rechte, um Daten aus dem Rohrnetz zu erheben "
                                                "und zu verwenden?",
@@ -934,16 +942,19 @@ cat_3_network_topology = Question(name="Rohrnetztopologie",
                                                   "Cases."
                                   )
 
-cat_3_default_questions = [cat_3_risk_question_1, cat_3_risk_question_2, cat_3_risk_question_3, cat_3_risk_question_4,
-                           cat_3_vibration_1, cat_3_labels_1, cat_3_environment_conditions, cat_3_pipeline_depth,
-                           cat_3_network_topology]
-cat_3_consequence_questions = [cat_3_labels_2, cat_3_labels_3, cat_3_vibration_2, cat_3_vibration_3]
+cat_3_default_questions: List[Question] = [cat_3_risk_question_1, cat_3_risk_question_2, cat_3_risk_question_3,
+                                           cat_3_risk_question_4,
+                                           cat_3_vibration_1, cat_3_labels_1, cat_3_environment_conditions,
+                                           cat_3_pipeline_depth,
+                                           cat_3_network_topology]
+cat_3_consequence_questions: List[Question] = [cat_3_labels_2, cat_3_labels_3, cat_3_vibration_2, cat_3_vibration_3]
 
 # category 4 questions
-category_name = category_names[3]
-cat_4_local_preference_questions = generate_preference_questions(criteria_list=category_criteria[category_name],
-                                                                 criteria_description=category_criteria_description[
-                                                                     category_name])
+category_name: str = category_names[3]
+cat_4_local_preference_questions: List[Question] = generate_preference_questions(
+    criteria_list=category_criteria[category_name],
+    criteria_description=category_criteria_description[
+        category_name])
 cat_4_risk_question_1 = Question(name="Zugriffsrechte",
                                  question_text="Haben Sie die notwendigen Rechte, um Daten aus dem Fernwärmenetz zu "
                                                "erheben und zu verwenden?",
@@ -1076,16 +1087,18 @@ cat_4_building_data = Question(name="Metadaten Gebäude",
                                reason_to_exist="Überprüfung der Umsetzungsvoraussetzungen für einige ML Use "
                                                "Cases."
                                )
-cat_4_default_questions = [cat_4_risk_question_1, cat_4_risk_question_2, cat_4_risk_question_3, cat_4_risk_question_4,
-                           cat_4_network_topology, cat_4_heat_generation,
-                           cat_4_indoor_temperatures, cat_4_building_data]
-cat_4_consequence_questions = []
+cat_4_default_questions: List[Question] = [cat_4_risk_question_1, cat_4_risk_question_2, cat_4_risk_question_3,
+                                           cat_4_risk_question_4,
+                                           cat_4_network_topology, cat_4_heat_generation,
+                                           cat_4_indoor_temperatures, cat_4_building_data]
+cat_4_consequence_questions: List[Question] = []
 
 # category 5 questions
 category_name = category_names[4]
-cat_5_local_preference_questions = generate_preference_questions(criteria_list=category_criteria[category_name],
-                                                                 criteria_description=category_criteria_description[
-                                                                     category_name])
+cat_5_local_preference_questions: List[Question] = generate_preference_questions(
+    criteria_list=category_criteria[category_name],
+    criteria_description=category_criteria_description[
+        category_name])
 cat_5_risk_question_1 = Question(name="Zugriffsrechte",
                                  question_text="Haben Sie die notwendigen Rechte, um Betriebsdaten von Hausstationen "
                                                "zu sammeln?",
@@ -1140,8 +1153,8 @@ cat_5_confidential = Question(name="Vertraulichkeit",
                               answer_mapping={"Ja": 5, "Nein": 1},
                               description_text=risk_4_description,
                               consequence_description="Wenn diese Frage mit 'Ja' beantwortet wird, steigt das "
-                                               "Umsetzungsrisiko für ML Use Cases in der Kategorie "
-                                               "'Betriebsstrategien Hausstationen'.",
+                                                      "Umsetzungsrisiko für ML Use Cases in der Kategorie "
+                                                      "'Betriebsstrategien Hausstationen'.",
                               reason_to_exist="Diese Frage wird gestellt, um das Umsetzungsrisiko für ML Use Cases "
                                               "in der Kategorie 'Betriebsstrategien Hausstationen' einschätzen zu "
                                               "können."
@@ -1283,8 +1296,11 @@ cat_5_substation_meta_data = Question(name="HAST Metadaten",
                                       reason_to_exist="Überprüfung der Umsetzungsvoraussetzungen für einige ML Use "
                                                       "Cases."
                                       )
-cat_5_default_questions = [cat_5_risk_question_1, cat_5_transparency, cat_5_resistance, cat_5_confidential,
-                           cat_5_valve_data_1, cat_5_pressure_data_1, cat_5_flow_rate_1, cat_5_user_comfort,
-                           cat_5_substation_meta_data]
-cat_5_consequence_questions = [cat_5_valve_data_2, cat_5_valve_data_3, cat_5_pressure_data_2, cat_5_pressure_data_3,
-                               cat_5_flow_rate_2, cat_5_flow_rate_3]
+cat_5_default_questions: List[Question] = [cat_5_risk_question_1, cat_5_transparency, cat_5_resistance,
+                                           cat_5_confidential,
+                                           cat_5_valve_data_1, cat_5_pressure_data_1, cat_5_flow_rate_1,
+                                           cat_5_user_comfort,
+                                           cat_5_substation_meta_data]
+cat_5_consequence_questions: List[Question] = [cat_5_valve_data_2, cat_5_valve_data_3, cat_5_pressure_data_2,
+                                               cat_5_pressure_data_3,
+                                               cat_5_flow_rate_2, cat_5_flow_rate_3]

@@ -18,10 +18,11 @@ class Questionnaire:
 
     Attributes:
         init_question (Question): The initial question for the questionnaire.
-        global_weights (dict): Weights for global criteria.
-        local_weights (dict): Weights for local criteria by category.
-        final_category_scores (dict): Final scores for each category.
-        final_use_case_scores (dict): Final scores for each evaluated use case.
+        global_weights (Dict[str, int]): Weights for global criteria.
+        local_weights (Dict[str, Dict[str, int]]): Weights for local criteria by category.
+        final_category_scores (Dict[str, Dict[str, float]]): Final scores for each category.
+        final_use_case_scores (Dict[str, Dict[str, Dict[str, float]]]): Final scores for each evaluated use case.
+            structure: {category_1: {use_case_1: {crit_1: float, ...}, ...}, ...}
         categories (List[Category]): List of categories included in the questionnaire.
         chosen_categories (List[Category]): List of categories selected by the user.
         category_index (int): The current index of the category being evaluated.
@@ -64,16 +65,16 @@ class Questionnaire:
     """
     def __init__(self):
         """ Initializes the Questionnaire object and its attributes. """
-        self.init_question = init_question
-        self.global_weights = None
-        self.local_weights = {}
-        self.final_category_scores = {}
-        self.final_use_case_scores = {}
-        self.categories = None
-        self.chosen_categories = None
-        self.category_index = 0
-        self.question_index = 1
-        self.completed = False
+        self.init_question: Question = init_question
+        self.global_weights: Dict[str, int] = {}
+        self.local_weights: Dict[str, Dict[str, int]] = {}
+        self.final_category_scores: Dict[str, Dict[str, float]] = {}
+        self.final_use_case_scores: Dict[str, Dict[str, Dict[str, float]]] = {}
+        self.categories: List[Category] = []
+        self.chosen_categories: List[Category] = []
+        self.category_index: int = 0
+        self.question_index: int = 1
+        self.completed: bool = False
 
     def set_categories(self, category_list: List[Category]) -> None:
         """ Sets the categories for the questionnaire based on the selected options.

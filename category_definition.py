@@ -1,4 +1,3 @@
-
 """
 Script for defining all categories and assigning use cases and questions.
 This script initializes all possible categories which can be used in the questionnaire application
@@ -15,6 +14,7 @@ category_4: Use case category 4 (Betriebsstrategien Wärmenetz).
 category_5: Use case category 5 (Betriebsstrategien Hausstationen).
 """
 
+from typing import Dict
 from settings import preference_category_name, general_category_name
 from category import Category
 from question_definition import *
@@ -54,9 +54,9 @@ category_5 = Category(name=category_names[4], color="#778c97",
                       consequence_questions=cat_5_consequence_questions,
                       use_cases=[c5_uc1, c5_uc2])
 
-category_dict = {category_names[0]: category_1,
-                 category_names[1]: category_2,
-                 category_names[2]: category_3,
-                 category_names[3]: category_4,
-                 category_names[4]: category_5
-                 }
+category_dict: Dict[str, Category] = {category_names[0]: category_1,
+                                      category_names[1]: category_2,
+                                      category_names[2]: category_3,
+                                      category_names[3]: category_4,
+                                      category_names[4]: category_5
+                                      }

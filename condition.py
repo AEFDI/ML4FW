@@ -21,11 +21,11 @@ class Condition:
     def __init__(self, condition_type: str, question_answer_list: List[Dict[str, str]]):
         """ Initializes the condition. """
         if condition_type in possible_condition_types:
-            self.condition_type = condition_type
+            self.condition_type: str = condition_type
         else:
             raise ValueError(f"Unknown condition type {condition_type}. Please just use condition types from the "
                              f"following list or define a new on in settings.py {possible_condition_types}.")
-        self.question_answer_list = question_answer_list
+        self.question_answer_list: List[Dict[str, str]] = question_answer_list
 
     def check(self, all_category_questions: List[Question], use_case_name: str) -> bool:
         """ Checks if the condition is fulfilled (i.e. all questions from question_answer_list can be found in the

@@ -1,4 +1,4 @@
-
+from typing import Tuple
 import customtkinter as ctk
 
 
@@ -9,7 +9,8 @@ class InfoIcon:
         master (ctk.CTkFrame): The master frame for the info icon.
         icon_size (int): The size of the icon in pixels.
         window_geometry (str): The geometry of the info window (e.g., "300x200+100+100").
-        text_font (tuple): The font settings for the info text, defined as a tuple.
+        text_font (Tuple[str, int, str]): The font settings for the info text, defined as a tuple
+            (e.g. ("arial", 18, "bold")).
         wrap_length (int): Wrap length for info text given in number of charakters.
 
     Attributes:
@@ -34,15 +35,16 @@ class InfoIcon:
             Closes the info window.
     """
 
-    def __init__(self, master: ctk.CTkFrame, icon_size: int, window_geometry: str, text_font: tuple, wrap_length: int):
-        self.master = master
-        self.icon_size = icon_size
-        self.window_geometry = window_geometry
-        self.text_font = text_font
-        self.info_text = ""
-        self.info_window_open = False
-        self.canvas = self.create_info_icon()
-        self.wrap_length = wrap_length
+    def __init__(self, master: ctk.CTkFrame, icon_size: int, window_geometry: str, text_font: Tuple[str, int, str],
+                 wrap_length: int):
+        self.master: ctk.CTkFrame = master
+        self.icon_size: int = icon_size
+        self.window_geometry: str = window_geometry
+        self.text_font: Tuple[str, int, str] = text_font
+        self.info_text: str = ""
+        self.info_window_open: bool = False
+        self.canvas: ctk.CTkCanvas = self.create_info_icon()
+        self.wrap_length: int = wrap_length
 
     def set_info_text(self, info_text: str):
         """ Sets the info text to be displayed in the info window.
@@ -52,7 +54,7 @@ class InfoIcon:
         """
         self.info_text = info_text
 
-    def place(self, x_pos: int, y_pos):
+    def place(self, x_pos: int, y_pos: int):
         """ Places the info icon at the specified coordinates.
 
         Args:
@@ -86,7 +88,7 @@ class InfoIcon:
         self.canvas.bind("<Button-1>", lambda event: self.open_info_window(event, info_text=self.info_text))
         return self.canvas
 
-    def open_info_window(self, event, info_text):
+    def open_info_window(self, event, info_text: str):
         """ Opens a new window displaying the info text when the icon is clicked.
 
         Args:
@@ -110,7 +112,7 @@ class InfoIcon:
         """ Closes the info window.
 
         Args:
-            info_window: The window to be closed.
+            info_window (ctk.CTkToplevel): The window to be closed.
         """
         info_window.destroy()
         self.info_window_open = False

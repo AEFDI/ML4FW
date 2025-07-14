@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Dict
 
 from settings import category_criteria, global_criteria, preference_category_name, general_category_name
 from question import Question
@@ -23,14 +23,14 @@ class Category:
         use_cases (List[UseCase]): A list of use cases associated with the category.
 
     Attributes:
-        final_use_case_scores (dict): dictionary used to assign each use case a score dict containing potential, effort
-            and risk values for the use case.
-        criteria_list (list): list of evaluation criteria names (str).
-        preference_questions (list): list of questions for criteria weighting (this list is empty for the general
-            question category.
-        potential_questions (list): list of all potential-related questions.
-        effort_questions (list): list of all effort-related questions.
-        risk_questions (list): list of all risk-related questions.
+        final_use_case_scores (Dict[str, Dict[str, float]]): dictionary used to assign each use case a score dict
+            containing potential, effort and risk values for the use case.
+        criteria_list (List[str]): list of evaluation criteria names (str).
+        preference_questions (List[Question]): list of questions for criteria weighting (this list is empty for the
+            general question category.
+        potential_questions (List[Question]): list of all potential-related questions.
+        effort_questions (List[Question]): list of all effort-related questions.
+        risk_questions (List[Question]): list of all risk-related questions.
 
     Methods:
         current_question() -> Union[Question, None]:
@@ -61,26 +61,26 @@ class Category:
     def __init__(self, name: str, color: str, default_questions: List[Question],
                  consequence_questions: List[Question], use_cases: List[UseCase]):
         """ Initializes the Category object with the provided parameters. """
-        self.name = name
-        self.color = color
-        self.questions = default_questions
+        self.name: str = name
+        self.color: str = color
+        self.questions: List[Question] = default_questions
         # depending on consequence questions self.questions can be altered so default questions are saved in an
         # additional variable
-        self.default_questions = default_questions.copy()
-        self.consequence_questions = consequence_questions
-        self.use_cases = use_cases
-        self.question_index = 0
-        self.final_use_case_scores = {}
+        self.default_questions: List[Question] = default_questions.copy()
+        self.consequence_questions: List[Question] = consequence_questions
+        self.use_cases: List[UseCase] = use_cases
+        self.question_index: int = 0
+        self.final_use_case_scores: Dict[str, Dict[str, float]] = {}
         if self.name == preference_category_name:
-            self.criteria_list = global_criteria
+            self.criteria_list: List[str] = global_criteria
         elif self.name == general_category_name:
             pass
         else:
-            self.criteria_list = category_criteria[name]
-        self.preference_questions = [q for q in self.questions if "Preference" in q.type]
-        self.potential_questions = [q for q in self.questions if "Potential" in q.type]
-        self.effort_questions = [q for q in self.questions if "Effort" in q.type]
-        self.risk_questions = [q for q in self.questions if "Risk" in q.type]
+            self.criteria_list: List[str] = category_criteria[name]
+        self.preference_questions: List[Question] = [q for q in self.questions if "Preference" in q.type]
+        self.potential_questions: List[Question] = [q for q in self.questions if "Potential" in q.type]
+        self.effort_questions: List[Question] = [q for q in self.questions if "Effort" in q.type]
+        self.risk_questions: List[Question] = [q for q in self.questions if "Risk" in q.type]
 
     def current_question(self) -> Union[Question, None]:
         """ Retrieves the current question based on the current question index.
@@ -126,7 +126,7 @@ class Category:
                                          consequence_question_name=previous_question.get_consequence_question_name(),
                                          question_index=current_question_index)
 
-    def add_consequence_question(self, consequence_question_name) -> None:
+    def add_consequence_question(self, consequence_question_name: str) -> None:
         """ Adds a consequence question to the question list based on the provided question name. This function is
         sometimes used when the user jumps to a previous questions and changes the answer.
 
@@ -171,19 +171,21 @@ class Category:
             risk /= len(self.risk_questions)
         return int(risk)
 
-    def eval_use_cases(self, local_criteria_weights: dict, general_question_list: List[Question]) -> dict:
+    def eval_use_cases(self, local_criteria_weights: Dict[str, int], general_question_list: List[Question]
+                       ) -> Dict[str, Dict[str, float]]:
         """ Evaluates the applicability and scoring of use cases based on the criteria weights and answers to questions.
 
         Args:
-            local_criteria_weights (dict): Weights for the local criteria used in the category specific evaluation.
+            local_criteria_weights (Dict[str, int]): Weights for the local criteria used in the category specific
+                evaluation.
             general_question_list (List[Question]): A list of general questions to additionally consider in the
                 evaluation.
 
         Returns:
-            dict: A dictionary containing the final scores for potential, effort and risk for each use case.
+            Dict[str, float]: A dictionary containing the final scores for potential, effort and risk for each use case.
         """
         for use_case in self.use_cases:
-            score = {"Potential": 0, "Effort": 0, "Risk": 0}
+            score = {"Potential": 0., "Effort": 0., "Risk": 0.}
             all_questions = general_question_list + self.default_questions + self.consequence_questions
             use_case.eval_applicability(all_category_questions=all_questions)
             if use_case.is_applicable:
