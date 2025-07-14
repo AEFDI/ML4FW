@@ -16,6 +16,28 @@ class UseCase:
         pro_contra_arguments (Dict[str, list]): A dictionary containing pro and contra arguments for the use case.
         literature_source (str): The source of literature related to the use case.
         description (str): A description of the use case.
+
+    Attributes:
+        is_applicable (bool or None): Indicates whether the use case is applicable (set after evaluation).
+        reasons_for_non_applicability (List): A list of reasons for non-applicability.
+
+    Methods:
+        __init__(name, predefined_potential, predefined_effort, predefined_risk_value, non_applicability_conditions,
+            pro_contra_arguments, literature_source, description):
+            Initializes the UseCase object and its attributes.
+        get_effort(effort_questions):
+            Combines the predefined effort values with the answers to the effort questions into a total effort value.
+        get_potential(local_criteria_weights):
+            Calculates the weighted potential of the use case based on local criteria weights.
+        get_risk(category_risk):
+            Calculates the overall risk value for the use case by averaging the category risk and predefined risk value.
+        is_not_applicable(all_category_questions):
+            Checks if the use case is not applicable based on its non-applicability conditions.
+        eval_applicability(all_category_questions):
+            Evaluates the applicability of the use case based on the provided questions and sets the applicability
+            attribute.
+        get_data_availability_questions():
+            Retrieves a list of question texts related to data availability and labeling conditions.
     """
     def __init__(self, name: str, predefined_potential: dict, predefined_effort: dict,
                  predefined_risk_value: int, non_applicability_conditions: List[Condition],
@@ -89,7 +111,7 @@ class UseCase:
         """
         return (category_risk + self.predefined_risk_value) / 2
 
-    def is_not_applicable(self, all_category_questions: List[Question]):
+    def is_not_applicable(self, all_category_questions: List[Question]) -> None:
         """ Checks if the use case is not applicable based on its non-applicability conditions.
 
         Args:
@@ -110,7 +132,7 @@ class UseCase:
                 # Do not break here in order to collect further potential non applicability reasons for use case summary
         return use_case_not_applicable
 
-    def eval_applicability(self, all_category_questions: List[Question]):
+    def eval_applicability(self, all_category_questions: List[Question]) -> None:
         """ Evaluates the applicability of the use case based on the provided questions and sets the applicability
         attribute.
 

@@ -1,22 +1,30 @@
 
 from typing import List, Dict
 from question import Question
+from settings import possible_condition_types
 
 
 class Condition:
-    """ Conditions are used to decide whether a use case is applicable or not. This class stores the necessary
-    information for condition inspection. """
+    f""" Conditions are used to decide whether a use case is applicable or not. This class stores the necessary
+    information for condition inspection.
+    In order to find the correct condition for a use case evaluation conveniently each condition is associated with a 
+    condition type that describes the topic of the condition.
+
+    Args:
+        condition_type (str): Description of condition type for condition filtering.
+            Possible options: {possible_condition_types}
+        question_answer_list (List[Dict[str, str]]): List containing questions and corresponding answers. If the
+            user answers match the defined answers for every question from this list, then the condition is
+            fulfilled.
+    """
+
     def __init__(self, condition_type: str, question_answer_list: List[Dict[str, str]]):
-        """ Initializes the condition
-        Args:
-            condition_type (str): Description of condition type for condition filtering.
-                Possible options: data availability, label availability, meta data availability, user specific,
-                    data quality
-            question_answer_list (List[Dict[str, str]]): List containing questions and corresponding answers. If the
-                user answers match the defined answers for every question from this list, then the condition is
-                fulfilled.
-        """
-        self.condition_type = condition_type
+        """ Initializes the condition. """
+        if condition_type in possible_condition_types:
+            self.condition_type = condition_type
+        else:
+            raise ValueError(f"Unknown condition type {condition_type}. Please just use condition types from the "
+                             f"following list or define a new on in settings.py {possible_condition_types}.")
         self.question_answer_list = question_answer_list
 
     def check(self, all_category_questions: List[Question], use_case_name: str) -> bool:
@@ -28,7 +36,7 @@ class Condition:
                 this condition)
             use_case_name (str): Name of the use case, which checks this condition.
         Returns:
-            True if the condition is fulfilled and False else.
+            bool: True if the condition is fulfilled and False else.
         """
         expected_answer_match = None
         for dictionary in self.question_answer_list:

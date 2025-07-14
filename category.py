@@ -9,6 +9,11 @@ class Category:
     """
     Represents a category in the questionnaire, containing questions and use cases related to that category.
     The category class also provides evaluation functions for aggregation of scores.
+    The questionnaire is expected to contain one Category object for each use case category that is defined in the
+    category_names variable in settings.py.
+    Additionally, there are the preferences category which is used to weight the global (cross category) evaluation
+    criteria and the general questions category which is used for questions that are important for most use case
+    categories.
 
     Args:
         name (str): The name of the category.
@@ -16,14 +21,50 @@ class Category:
         default_questions (List[Question]): The default questions for the category.
         consequence_questions (List[Question]): Questions that may follow based on previous answers.
         use_cases (List[UseCase]): A list of use cases associated with the category.
+
+    Attributes:
+        final_use_case_scores (dict): dictionary used to assign each use case a score dict containing potential, effort
+            and risk values for the use case.
+        criteria_list (list): list of evaluation criteria names (str).
+        preference_questions (list): list of questions for criteria weighting (this list is empty for the general
+            question category.
+        potential_questions (list): list of all potential-related questions.
+        effort_questions (list): list of all effort-related questions.
+        risk_questions (list): list of all risk-related questions.
+
+    Methods:
+        current_question() -> Union[Question, None]:
+            Retrieves the current question based on the current question index.
+
+        next_question() -> bool:
+            Moves to the next question in the category, and adds a consequence question if applicable.
+
+        previous_question():
+            Moves to the previous question in the category, removing a consequence question if necessary.
+
+        add_consequence_question(consequence_question_name: str):
+            Adds a consequence question to the question list based on the provided question name.
+
+        remove_consequence_question(current_question: Question, consequence_question_name: str, question_index: int):
+            Removes the consequence question from the question list if it matches the current question.
+
+        eval_category_risk() -> int:
+            Evaluates the average risk based on the risk-related questions in the category.
+
+        eval_use_cases(local_criteria_weights: dict, general_question_list: List[Question]) -> dict:
+            Evaluates the applicability and scoring of use cases based on the criteria weights and answers to questions.
+
+        update_question_categories(question_list: List[Question]):
+            Updates the categorized questions based on a new list of questions.
     """
+
     def __init__(self, name: str, color: str, default_questions: List[Question],
                  consequence_questions: List[Question], use_cases: List[UseCase]):
         """ Initializes the Category object with the provided parameters. """
         self.name = name
         self.color = color
         self.questions = default_questions
-        # depending on consequence evaluations self.questions can be altered so default questions are saved in an
+        # depending on consequence questions self.questions can be altered so default questions are saved in an
         # additional variable
         self.default_questions = default_questions.copy()
         self.consequence_questions = consequence_questions
@@ -56,7 +97,7 @@ class Category:
         """ Moves to the next question in the category, and adds a consequence question if applicable.
 
         Returns:
-            bool: True if there is a next question, False else
+            bool: True if there is a next question, False else.
         """
         current_question = self.current_question()
         if self.question_index < len(self.questions):
@@ -64,15 +105,14 @@ class Category:
             next_question_found = True
         else:
             next_question_found = False
-        # if there are questions that must follow the current question then this question is inserted as the next
-        # question.
+        # Check if there is a consequence question for the current question and insert it as the next question if the
+        # trigger answer is given.
         if current_question is None:
             return False
         elif current_question.consequence_triggered():
             self.add_consequence_question(consequence_question_name=current_question.get_consequence_question_name())
             next_question_found = True
         return next_question_found
-
 
     def previous_question(self) -> None:
         """ Moves to the previous question in the category, removing a consequence question if necessary. """

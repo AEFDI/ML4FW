@@ -1,6 +1,18 @@
 
 """
 Script for defining all categories and assigning use cases and questions.
+This script initializes all possible categories which can be used in the questionnaire application
+with their associated questions and use cases.
+
+This script defines the categories:
+
+preferences: Category for global criteria weighting questions.
+general_questions: Category for questions which are important for most of the use case categories.
+category_1: Use case category 1 (Wärmebedarfsprognose).
+category_2: Use case category 2 (Instandhaltung Hausstationen).
+category_3: Use case category 3 (Instandhaltung Rohrnetz).
+category_4: Use case category 4 (Betriebsstrategien Wärmenetz).
+category_5: Use case category 5 (Betriebsstrategien Hausstationen).
 """
 
 from settings import preference_category_name, general_category_name

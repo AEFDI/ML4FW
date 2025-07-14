@@ -9,7 +9,7 @@ class Question:
     Args:
         name (str): The unique identifier for the question.
         question_text (str): The text of the question to be displayed to the user.
-        options (list): A list of possible answers for the question.
+        options (list): A list of possible answers for the question (str).
         multiple_choice (bool): Indicates whether the question allows multiple answers.
         question_types (List[str]): A list of types that classify the question. Possible types are: Preference,
                 Specification, Potential, Effort, Risk
@@ -50,7 +50,7 @@ class Question:
             self.value = self.answer_mapping[answer]
 
     def consequence_triggered(self) -> bool:
-        """ Checks if a consequence questions should be triggered based on the current answer.
+        """ Checks if a consequence question should be triggered based on the current answer.
 
         Returns:
             bool: True if a consequence is triggered, False otherwise.
@@ -73,13 +73,19 @@ class Question:
             return None
 
     def get_info_text(self) -> str:
-        """ Returns info text consisting out of description, consequence description and reason_to_exist """
-        info_text = "Informationen zur Frage:" + "\n"
-        info_text += self.description_text + "\n" + "\n"
-        info_text += "Auswirkungen der Antworten:" + "\n"
-        info_text += self.consequence_description + "\n" + "\n"
-        info_text += "Warum diese Frage gestellt wird:" + "\n"
-        info_text += self.reason_to_exist
+        """ Returns info text consisting of description, consequence description and reason_to_exist """
+        info_text = ""
+        if self.description_text is not None:
+            info_text += "Informationen zur Frage:" + "\n"
+            info_text += self.description_text + "\n" + "\n"
+        if self.consequence_description is not None:
+            info_text += "Auswirkungen der Antworten:" + "\n"
+            info_text += self.consequence_description + "\n" + "\n"
+        if self.reason_to_exist is not None:
+            info_text += "Warum diese Frage gestellt wird:" + "\n"
+            info_text += self.reason_to_exist
+        if info_text == "":
+            info_text = "Keine zusätzlichen Informationen verfügbar."
         return info_text
 
 

@@ -1,6 +1,7 @@
 """
-Script for defining all questions and setting question texts, answers, question types and ordering the questions for
-category assigning.
+Script for defining all questions related to ML use cases in a questionnaire format.
+This script sets the question texts, answers, question types, and organizes questions according to their respective
+categories.
 """
 
 from settings import category_names, global_criteria, category_criteria, min_substations_for_clustering, \
@@ -10,7 +11,7 @@ from question import Question, generate_preference_questions
 
 init_question = Question(name="Init",
                          question_text="Bitte wählen Sie mindestens eine der folgenden 5 ML-Use-Case-Kategorien. Es "
-                                       "ist auch möglich Mehrere auszuwählen.",
+                                       "ist auch möglich mehrere auszuwählen.",
                          options=[key + ":\n" + value for key, value in category_descriptions.items()],
                          multiple_choice=True,
                          question_types=["Preference"],
@@ -454,7 +455,7 @@ risk_3_description = "Auch wenn das Nutzungsrecht für die Daten geklärt ist, k
                      "Einführung von ML Use Cases kommen. Dabei kann es sich im unternehmensinterne Widerstände" \
                      "von Mitarbeitern oder dem Management handeln oder um externe Widerstände, wie beispielsweise " \
                      "von Verbrauchern. Ein Beispiel für einen solchen Widerstand ist die fehlende " \
-                     "Nutzungsbereitschaft für die ML Lösung. Bitte schätzen Sie für diese Frage ein, ob Sie von " \
+                     "Nutzungsbereitschaft für die ML-Lösung. Bitte schätzen Sie für diese Frage ein, ob Sie von " \
                      "Widerständen bei der Umsetzung ausgehen oder eher nicht."
 risk_4_description = "Vertraulichkeit von Daten nach der DSGVO bedeutet, dass personenbezogene Daten so verarbeitet " \
                      "werden müssen, dass sie vor unbefugtem Zugriff, unrechtmäßiger Verarbeitung, Offenlegung, " \

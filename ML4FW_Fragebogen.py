@@ -9,6 +9,7 @@ from questionnaire import Questionnaire
 from question import Question
 from use_case import UseCase
 from category_definition import category_dict
+from info_icon import InfoIcon
 from settings import risk_colors, result_directory_relative_path, preference_category_name, general_category_name, \
     intro_text, intro_explanation, preference_info_text, option_info
 
@@ -16,13 +17,13 @@ from settings import risk_colors, result_directory_relative_path, preference_cat
 class ML4FWQuestionnaireApp:
     """
     This class that provides a questionnaire for estimating potential, costs and risk of  Machine Learning applications
-    in district heating network operations. The Gui which is created in this class consists of the components
-    1. Start Menu
-    2. Options Menu (Use-Case category selection)
-    3. Category/question display section
-    4. Displaying category results
-    5. Displaying use case results
-    6. Displaying additional info on use cases
+    in district heating network operations. The GUI which is created in this class consists of the components:
+    1. **Start Menu**: Allows the user to start a new questionnaire or load a saved state.
+    2. **Options Menu**: Enables the selection of use-case categories.
+    3. **Category/Question Display Section**: Displays the current category and corresponding questions.
+    4. **Displaying Category Results**: Shows the results of category analysis.
+    5. **Displaying Use Case Results**: Presents the results for individual use cases.
+    6. **Displaying Additional Info on Use Cases**: Provides detailed information about selected use cases.
 
     Args:
         master (ctk.CTk): The main window of the application.
@@ -30,12 +31,55 @@ class ML4FWQuestionnaireApp:
     Attributes:
         questionnaire (Questionnaire): The current questionnaire object.
         master (ctk.CTk): The main window of the application.
+        win_height (int): Height of the main window.
+        win_width (int): Width of the main window.
+        y_offset (int): Vertical offset for window positioning.
+        x_offset (int): Horizontal offset for window positioning.
+        window_geometry (str): Geometry string for the main window (e.g., "300x200+100+100").
+        secondary_window_geometry (str): Geometry string for secondary windows.
+        big_frame_width (int): Width of large frames.
+        big_frame_height (int): Height of large frames.
+        middle_frame_width (int): Width of medium frames for question body.
+        middle_frame_height (int): Height of medium frames for question body.
+        small_frame_width (int): Width of small frames for headlines.
+        small_frame_height (int): Height of small frames for headlines.
+        long_wrap_length (int): Wrap length for long text.
+        middle_wrap_length (int): Wrap length for medium text.
+        short_wrap_length (int): Wrap length for short text.
+        big_headline_font (tuple): Font settings for big headlines.
+        head_line_font (tuple): Font settings for regular headlines.
+        plain_text_font (tuple): Font settings for plain text.
+        icon_size (int): Size of info icons.
+        info_window_open (bool): Flag to indicate if an info window is open.
+        init_options (bool): Flag to indicate if options have been initialized.
+        active_use_case_window (ctk.CTkToplevel): Reference to the active use case window.
+
+    Methods:
+        display_start_frame(): Displays the start menu of the application.
+        display_option_frame(): Displays the options menu for category selection.
+        display_preference_options(): Displays explanations for preference options.
+        display_category_frame(): Displays the current category in the questionnaire.
+        display_question_frame(): Displays the current question and answer options.
+        display_completion_frame(): Displays the completion screen after questionnaire submission.
+        display_category_result_frame(): Displays results of category analysis as a plot.
+        display_use_case_result_frame(category_name): Displays comparison plot for use cases in a new window.
+        display_use_case_summary_frame(use_case_name, category_name): Displays summary of a specific use case.
+        update_category_display(): Displays the current category label and the first question of the category.
+        update_question_display(): Updates the display of the current question and answer options.
+        next_question(): Moves to the next question and saves current answers.
+        previous_question(): Moves to the previous question.
+        quit_application(): Exits the application.
+        save(frame): Saves the current state of the questionnaire to a file.
+        load_questionnaire(): Loads a questionnaire from a specified file path.
+        clear_frame(frame): Clears all widgets from the specified frame.
+        scatter_plot(is_category, category_name): Creates a scatter plot for categories or use cases.
+        add_category_plot(): Adds the category plot to the display.
+        add_use_case_plot(category_name): Adds the use case plot for a specific category.
     """
 
     def __init__(self, master) -> None:
         """ Initializes the ML4FWQuestionnaireApp and sets up the GUI layout. """
-
-        # Gui text settings
+        # GUI text settings
         self.win_height = 900
         self.win_width = int(self.win_height / 1.3)
         self.y_offset = 0
@@ -101,7 +145,7 @@ class ML4FWQuestionnaireApp:
         self.start_button = ctk.CTkButton(self.start_menu_frame, text="Neuer Fragebogen",
                                           command=self.start_pressed)
         self.load_save_button = ctk.CTkButton(self.start_menu_frame, text="Speicherstand laden",
-                                              command=self.get_file_path)
+                                              command=self.display_file_path_text_box)
         self.load_explanation_label = ctk.CTkLabel(self.start_menu_frame,
                                                    text="Zum Laden eines Speicherstands geben Sie den Pfad zur "
                                                         "Speicherdatei in der Textbox unten an.",
@@ -203,7 +247,9 @@ class ML4FWQuestionnaireApp:
                                              text="Vielen Dank für das Ausfüllen des Fragebogens!",
                                              wraplength=self.long_wrap_length, font=self.head_line_font)
         self.completion_category_plot_button = ctk.CTkButton(self.completion_frame, text="Kategorievergleich",
-                                                             command=self.display_category_result_frame)
+                                                             command=self.display_category_result_screen)
+        self.completion_back_button = ctk.CTkButton(self.completion_frame, text="Zurück",
+                                                    command=self.previous_question)
         self.completion_save_progress_button = ctk.CTkButton(self.completion_frame, text="Ergebnisse speichern",
                                                              command=lambda: self.save(frame=self.completion_frame))
         self.completion_close_button = ctk.CTkButton(self.completion_frame, text="Anwendung schließen",
@@ -216,6 +262,8 @@ class ML4FWQuestionnaireApp:
                                                           "um eine Abwägung der Use-Cases innerhalb der Kategorie zu "
                                                           "erhalten.", wraplength=self.long_wrap_length,
                                                      font=self.plain_text_font)
+        self.category_back_button = ctk.CTkButton(self.category_result_frame, text="Zurück",
+                                                  command=self.category_result_back_pressed)
         self.category_scatters = []
         self.category_figure = None
         self.category_canvas = None
@@ -239,17 +287,23 @@ class ML4FWQuestionnaireApp:
         if not os.path.isdir(result_directory_relative_path):
             os.mkdir(result_directory_relative_path)
 
-        self.question_index = 1
         self.info_window_open = False
         self.init_options = True
         self.active_use_case_window = None
-        self.display_start_frame()
+        self.display_start_screen()
 
     # Display frames
 
-    def display_start_frame(self) -> None:
+    def display_start_screen(self) -> None:
         """ Displays the start menu of the application, including the title text and buttons for starting a new
-        questionnaire and loading a saved state. """
+        questionnaire and loading a saved state. Start screen contains:
+        1. Headline of the questionnaire app.
+        2. Intro text with scrollbar: Shows introduction text for the questionnaire.
+        3. Info icon: Displays additional info regarding the questionnaire.
+        4. Start button: Starts a new questionnaire.
+        5. Load button: Loads an existing questionnaire from a file.
+        6. Close button: Closes the application.
+        """
         self.start_menu_name_frame.pack(pady=20)
         self.start_menu_info_frame.pack(pady=20)
         self.start_menu_label.pack(pady=20)
@@ -264,8 +318,17 @@ class ML4FWQuestionnaireApp:
         self.load_save_button.pack(pady=20)
         self.start_menu_close_button.pack(pady=20)
 
-    def display_option_frame(self) -> None:
-        """ Displays the options menu for selecting categories in the questionnaire. """
+    def display_option_screen(self) -> None:
+        """ Displays the options menu for selecting categories in the questionnaire.
+        Option screen contains:
+        1. Headline of the option frame.
+        2. Category selection question text.
+        3. Info icon: Displays additional info for the category selection.
+        4. Answer check boxes for the question.
+        5. Continue button: Proceeds to criteria weighting screen.
+        6. Back button: Takes the user back to the starting screen.
+        7. Close button: Closes the application.
+        """
         self.options_name_frame.pack(pady=20)
         self.options_frame.pack(pady=20)
         self.option_label.pack(pady=20)
@@ -291,8 +354,15 @@ class ML4FWQuestionnaireApp:
         self.option_close_button.pack(pady=20)
         self.init_options = False
 
-    def display_preference_options(self) -> None:
-        """ Displays explanations to preference options and global weights. """
+    def display_info_on_preferences_screen(self) -> None:
+        """ Displays explanations to preference options and global weights.
+        This screen contains:
+        1. Headline.
+        2. Info text.
+        3. Continue button: Proceeds to the preference questions (criteria weighting).
+        4. Back button: Returns back to the options screen for category selection.
+        5. Close button: Closes the application.
+        """
         self.preference_information_title_frame.pack(pady=20)
         self.preference_information_name.pack(pady=20)
         self.preference_information_frame.pack(pady=20)
@@ -302,12 +372,27 @@ class ML4FWQuestionnaireApp:
         self.preference_close_button.pack(pady=20)
 
     def display_category_frame(self) -> None:
-        """ Displays the frame for showing the current category in the questionnaire. """
+        """ Displays the frame for showing the current category in the questionnaire.
+        This frame contains the category headline.
+        """
         self.category_frame.pack(pady=20)
         self.category_label.pack(pady=20)
 
     def display_question_frame(self) -> None:
-        """ Displays the frame for showing the current question and answer options. """
+        """ Displays the frame for showing the current question and answer options.
+        This frame contains:
+        1. Question text.
+        2. Info icon: Displays additional information the question.
+        3. Checkboxes for each answer option of the question.
+        4. Next question button: Proceeds to next question or to the completion screen (if all questions are answered).
+        5. Previous question button: Returns to the previous question or to the info_on_preferences_screen if there is
+            no previous question.
+        6. Save button: Saves the current questionnaire (including the given answers) in pickle format.
+        7. Close button: Closes the application.
+        8. Progress info: Shows number of questions answered and current total number questions in the questionnaire.
+        8.1: Progress info tooltip: Info text explaining that the total number of questions can rise depending on
+            the given answers since some answers trigger consequence questions.
+        """
         self.question_frame.pack(pady=20)
         self.question_label.pack(pady=20)
         current_question = self.questionnaire.current_category().current_question()
@@ -322,8 +407,15 @@ class ML4FWQuestionnaireApp:
         self.question_close_button.pack(pady=10)
         self.display_progress()
 
-    def display_progress(self):
-        progress_text = self.get_progress()
+    def display_progress(self) -> None:
+        """ Updates and displays the current progress of the questionnaire. This method shows the number of questions
+        answered by the user and the total number of questions in the questionnaire. The displayed progress is updated
+        dynamically as the user navigates through the questions.
+        Additionally, it provides a tooltip that is displayed when the user hovers over the progress label.
+        The tooltip explains that the total number of questions may increase depending on the answers given,
+        as some responses can trigger additional consequence questions.
+        """
+        progress_text = self.questionnaire.get_progress()
         self.question_progress_label.configure(text=progress_text)
         self.question_progress_label.pack(side="bottom", anchor="se", padx=10, pady=10)
         tooltip_text = "Die Gesamtanzahl der Fragen kann sich abhängig von Ihren Antworten im Verlauf des " \
@@ -337,26 +429,47 @@ class ML4FWQuestionnaireApp:
                                                                                      text=tooltip_text))
         self.question_progress_label.bind("<Leave>", self.hide_tooltip)
 
-    def display_completion_frame(self) -> None:
-        """ Displays the completion screen after all questions of the questionnaire have been filled out. """
+    def display_completion_screen(self) -> None:
+        """ Displays the completion screen after all questions of the questionnaire have been filled out.
+        This screen contains:
+        1. Headline.
+        2. Show result button: Shows category scatter plot.
+        3. Back button: Returns back to the last question of the questionnaire.
+        4. Save button: Saves the current questionnaire in pickle format.
+        5. Close button: Closes the application.
+        """
         self.completion_frame.pack(pady=20)
         self.completion_label.pack(pady=20)
         self.completion_category_plot_button.pack(pady=20)
+        self.completion_back_button.pack(pady=20)
         self.completion_save_progress_button.pack(pady=20)
         self.completion_close_button.pack(pady=20)
 
-    def display_category_result_frame(self) -> None:
-        """ Displays the results of the category analysis, in form of a plot for category comparison. """
+    def display_category_result_screen(self) -> None:
+        """ Displays the results of the category analysis, in form of a plot for category comparison.
+        This screen contains:
+        1. Scatter plot of all evaluated categories.
+        2. Information label: Explains how one can interact with the plot.
+        3. Back button: Returns back to the completion screen.
+        4. Save plot button: Save the plot in png format.
+        5. Save progress button: Saves the questionnaire in pickle format.
+        6. Close button: Closes the application.
+        """
         self.clear_frame(frame=self.completion_frame)
         self.category_result_frame.pack(pady=20)
         self.add_category_plot()
         self.category_plot_info_label.pack(pady=20)
+        self.category_back_button.pack(pady=20)
         self.save_category_button.pack(pady=20)
         self.category_save_progress_button.pack(pady=20)
         self.category_result_close_button.pack(pady=20)
 
-    def display_use_case_result_frame(self, category_name: str) -> ctk.CTkToplevel:
+    def display_use_case_result_window(self, category_name: str) -> ctk.CTkToplevel:
         """ Displays the comparison plot for the use cases of a specific category in a new window.
+        This window contains:
+        1. Scatter plot of all use case evaluations in the specified category.
+        2. Save plot button: Saves the scatter plot in png format.
+        3. Close button: Closes the use case result window.
 
         Args:
             category_name (str): The name of the category whose use cases are to be displayed.
@@ -385,8 +498,15 @@ class ML4FWQuestionnaireApp:
         self.use_case_result_close_button.pack(pady=20)
         return new_window
 
-    def display_use_case_summary_frame(self, use_case_name: str, category_name: str) -> None:
+    def display_use_case_summary_window(self, use_case_name: str, category_name: str) -> None:
         """ Displays the summary of a given use case in a new window.
+        This window contains:
+        1. Headline (use case name).
+        2. Info text that describes the use case briefly.
+        3. (Optional) Info text on non applicability reasons if there are any.
+        4. Pro and Contra table for aspects of the use case.
+        5. Source link: Literature source for the given use case.
+        6. Close button: Closes the use case summary window.
 
         Args:
             use_case_name (str): The name of the use case.
@@ -498,11 +618,10 @@ class ML4FWQuestionnaireApp:
         for j in range(len(headers)):
             pro_contra_frame.grid_columnconfigure(j, weight=1)
 
-    # Update frames
-
+    # Update screens
     def update_category_display(self) -> None:
-        """ Displays the current category label if the current questionnaire category is not None.
-        Additionally, this function calls the first question display for a category.
+        """ Displays the current category label if the current questionnaire category is not None. If there is no
+        current category, the completion_screen will be shown.
         """
         category = self.questionnaire.current_category()
         if category is not None:
@@ -517,34 +636,35 @@ class ML4FWQuestionnaireApp:
         else:
             self.clear_frame(frame=self.category_frame)
             self.clear_frame(frame=self.question_frame)
-            self.display_completion_frame()
+            self.display_completion_screen()
 
     def update_question_display(self) -> None:
-        """ Updates the display of the current question and answer options. """
+        """ Updates the display of the current question and answer options. If there is no current question in the
+        current category, the next category will be selected. """
         question = self.questionnaire.current_category().current_question()
         if question is not None:
             self.question_label.configure(text=question.question_text)
             self.question_info_icon.set_info_text(info_text=question.get_info_text())
-            progress_text = self.get_progress()
+            progress_text = self.questionnaire.get_progress()
             self.question_progress_label.configure(text=progress_text)
-            self.reset_check_boxes()
+            self.destroy_check_boxes()
             self.create_check_boxes(question=question, selected_answer=question.answer)
         else:
             self.questionnaire.next_category()
             self.update_category_display()
 
     # Button functions
-
     def start_pressed(self) -> None:
         """ Starts a new questionnaire and displays the option menu (category selection). """
         self.clear_frame(frame=self.start_menu_name_frame)
         self.clear_frame(frame=self.start_menu_frame)
         self.load_path_box_packed = False
         self.loading_error_label_packed = False
+
         # Initialize new questionnaire
         self.questionnaire = Questionnaire()
         self.multiple_choice_options = []
-        self.display_option_frame()
+        self.display_option_screen()
 
     def option_continue_pressed(self) -> None:
         """ Saves the selected options and displays the preference information screen. """
@@ -554,67 +674,129 @@ class ML4FWQuestionnaireApp:
             self.clear_frame(frame=self.option_check_box_frame)
             self.clear_frame(frame=self.options_name_frame)
             self.clear_frame(frame=self.options_frame)
-            self.display_preference_options()
+            self.display_info_on_preferences_screen()
+        else:
+            # Remind the user that no answer was given yet.
+            no_answer_label = ctk.CTkLabel(self.options_frame, text="Bitte beantworten Sie zuerst die Frage.")
+            no_answer_label.pack(pady=10)
+            no_answer_label.after(1500, no_answer_label.destroy)
 
     def options_back_pressed(self) -> None:
-        """ Clears options frame and displays start frame. """
+        """ Clears options screen and displays start screen. """
         self.clear_frame(frame=self.option_check_box_frame)
         self.clear_frame(frame=self.options_name_frame)
         self.clear_frame(frame=self.options_frame)
-        self.display_start_frame()
+        self.display_start_screen()
 
     def preference_continue_pressed(self) -> None:
-        """ Clears preference frame and displays first category. """
+        """ Clears preference screen and displays first category. """
         self.clear_frame(frame=self.preference_information_title_frame)
         self.clear_frame(frame=self.preference_information_frame)
         self.display_category_frame()
         self.update_category_display()
 
     def preference_back_pressed(self) -> None:
-        """ Clears preference frame and displays option frame. """
+        """ Clears preference screen and displays option screen. """
         self.clear_frame(frame=self.preference_information_title_frame)
         self.clear_frame(frame=self.preference_information_frame)
-        self.display_option_frame()
+        self.display_option_screen()
 
     def next_question(self) -> None:
-        """ Moves to the next question in the questionnaire and saves the currently given answers. """
+        """ Moves to the next question in the questionnaire and saves the currently given answers. Prints a reminder if
+         no answer was given yet. """
         current_question = self.questionnaire.current_category().current_question()
-        if current_question.multiple_choice:
-            if len(self.multiple_choice_options) > 0:  # At least one answer was given -> save the answers
-                current_question.set_answer(self.multiple_choice_options)
-            else:  # No answer was given -> nothing happens
-                return
-        else:
-            answer = self.single_choice_option.get()
-            if len(answer) > 0:  # An answer was given -> save it
-                current_question.set_answer(answer)
-            else:  # No answer was given -> nothing happens
-                return
+        answer_given = self.set_answer(question=current_question)
+        if not answer_given:
+            # Remind the user that no answer was given yet.
+            no_answer_label = ctk.CTkLabel(self.question_frame, text="Bitte beantworten Sie zuerst die Frage.")
+            no_answer_label.pack(pady=10)
+            no_answer_label.after(1500, no_answer_label.destroy)
+            return
         next_question_found = self.questionnaire.current_category().next_question()
         if next_question_found:
-            self.question_index += 1
+            self.questionnaire.question_index += 1
         self.update_question_display()
 
     def previous_question(self) -> None:
-        """ Moves to the previous question in the questionnaire. """
-        category_question_index = self.questionnaire.current_category().question_index
-        if category_question_index > 0:
-            self.questionnaire.current_category().previous_question()
-            self.question_index -= 1
-        else:
-            if self.questionnaire.current_category().name == preference_category_name:
-                self.clear_frame(frame=self.category_frame)
-                self.clear_frame(frame=self.question_frame)
-                self.display_preference_options()
-                return
-            else:
-                self.questionnaire.previous_category()
-                previous_questions = self.questionnaire.current_category().questions
-                self.questionnaire.current_category().question_index = len(previous_questions) - 1
-                self.question_index -= 1
-                self.update_category_display()
+        """ Moves to the previous question in the questionnaire. If there is no previous question the
+        info_on_preferences_screen will be displayed. If the questionnaire was already completed, the last question
+        of the last category will be shown. Also saves the given answer (if there is any) to the current question, in
+        case it has changed.
+        There are 4 possible transitions, that this function handles:
+        1. Completion to question:
+            If questionnaire is already completed, go back to the last question of the last category.
+        2. Question to preference info:
+            If the first question if the questionnaire is reached, go back to the preference info screen.
+        3. Current question to previous question:
+            If there is a previous question within the current category, move to that question.
+        4. Current question to previous category:
+            If there is no previous question in the current category but there still is a previous category,
+            go back to the last question of the previous category.
+        """
+        if self.questionnaire.current_category() is None:
+            # In this case the questionnaire is already completed, so the previous category must be displayed.
+            self.questionnaire.previous_category()
 
-        self.update_question_display()
+            # get last question of the previous category
+            previous_questions = self.questionnaire.current_category().questions
+            self.questionnaire.current_category().question_index = len(previous_questions) - 1
+            self.questionnaire.question_index -= 1
+
+            # screen transition
+            self.clear_frame(frame=self.completion_frame)
+            self.display_category_frame()
+            self.update_category_display()
+
+        else:  # In this case the questionnaire is not completed so a current category exists
+
+            # save the answer of the current question in case it has changed
+            current_question = self.questionnaire.current_category().current_question()
+            self.set_answer(question=current_question)
+
+            category_question_index = self.questionnaire.current_category().question_index
+            if category_question_index > 0:
+                self.questionnaire.current_category().previous_question()
+                self.questionnaire.question_index -= 1
+
+            else:
+                # In this case the user has reached the first question of the current category, so we have to go back to
+                # the previous category.
+                if self.questionnaire.current_category().name == preference_category_name:
+                    # If the current category is preferences then there exists no previous category, so we must
+                    # transition back to the info on preferences screen.
+                    self.clear_frame(frame=self.category_frame)
+                    self.clear_frame(frame=self.question_frame)
+                    self.display_info_on_preferences_screen()
+                    return
+                else:
+                    # If the current category is not preferences then there exists a previous category of which the
+                    # last question has to be displayed.
+                    self.questionnaire.previous_category()
+                    previous_questions = self.questionnaire.current_category().questions
+                    self.questionnaire.current_category().question_index = len(previous_questions) - 1
+                    self.questionnaire.question_index -= 1
+                    self.update_category_display()
+
+            self.update_question_display()
+
+    def set_answer(self, question: Question) -> bool:
+        """ If an answer to question was given, it will be saved. Otherwise, nothing happens.
+
+        Args:
+            question (Question): question object for saving the answer
+        Returns:
+            bool: True if an answer was given, False else.
+        """
+        if question.multiple_choice:
+            answer_given = len(self.multiple_choice_options) > 0
+            if answer_given:
+                question.set_answer(self.multiple_choice_options)
+        else:
+            answer = self.single_choice_option.get()
+            answer_given = len(answer) > 0
+            if answer_given:
+                question.set_answer(answer)
+        return answer_given
 
     def show_tooltip(self, event, master: ctk.CTkFrame, x_pos: int, y_pos: int, text: str) -> None:
         """ Shows the tooltip when hovering over the question_progress_label. """
@@ -626,15 +808,15 @@ class ML4FWQuestionnaireApp:
         self.tooltip.place(x=x_pos, y=y_pos)
 
     def hide_tooltip(self, event) -> None:
-        """ Hides the tooltip when not hovering over the question_progress_label. """
+        """ Hides the tooltip when the mouse leaves the question_progress_label. """
         if self.tooltip is not None:
             self.tooltip.after(500, self.tooltip.destroy)
             self.tooltip = None
 
-    def switch_to_category_plot(self) -> None:
-        """ Switches to the display of the category plot. """
-        self.clear_frame(frame=self.use_case_result_frame)
-        self.add_category_plot()
+    def category_result_back_pressed(self) -> None:
+        """ Clears category result screen and shows completion screen. """
+        self.clear_frame(frame=self.category_result_frame)
+        self.display_completion_screen()
 
     def save_category_plot(self, frame: ctk.CTkFrame) -> None:
         """ Saves the category plot as a PNG file.
@@ -684,24 +866,14 @@ class ML4FWQuestionnaireApp:
                 if is_category:
                     if self.active_use_case_window is not None:
                         self.active_use_case_window.destroy()
-                    new_window = self.display_use_case_result_frame(category_name=name)
+                    new_window = self.display_use_case_result_window(category_name=name)
                     self.active_use_case_window = new_window
                 else:
-                    self.display_use_case_summary_frame(use_case_name=name, category_name=category_name)
+                    self.display_use_case_summary_window(use_case_name=name, category_name=category_name)
 
     # Utility functions
-
-    def get_progress(self) -> str:
-        """ Evaluates the current questionnaire progress and returns it in form of string
-
-        Returns:
-            str: progress in form of question_index / num_total_questions
-        """
-        num_questions = self.questionnaire.get_number_of_questions()
-        progress_text = f"Frage {self.question_index}/{num_questions}"
-        return progress_text
-
-    def get_file_path(self) -> None:
+    def display_file_path_text_box(self) -> None:
+        """ Displays an input box for the file path and fills it with a default value. """
         if self.load_path_box_packed:
             pass
         else:
@@ -717,6 +889,7 @@ class ML4FWQuestionnaireApp:
             self.load_path_box_packed = True
 
     def load_questionnaire(self) -> None:
+        """ Loads a questionnaire from the pickle file in path specified by the load_path_box. """
         path = self.load_path_box.get()
         if os.path.isfile(path):
             with open(path, "rb") as file:
@@ -727,7 +900,7 @@ class ML4FWQuestionnaireApp:
             self.load_path_box_packed = False
             self.loading_error_label_packed = False
             if self.questionnaire.completed:
-                self.display_completion_frame()
+                self.display_completion_screen()
             else:
                 self.display_category_frame()
                 self.update_category_display()
@@ -741,7 +914,8 @@ class ML4FWQuestionnaireApp:
                 self.start_menu_close_button.pack(pady=20)
                 self.loading_error_label_packed = True
 
-    def reset_check_boxes(self) -> None:
+    def destroy_check_boxes(self) -> None:
+        """ Destroys all current checkboxes in the question frame. """
         if len(self.question_check_boxes) > 0:
             for widget in self.question_check_boxes:
                 widget.destroy()
@@ -787,7 +961,8 @@ class ML4FWQuestionnaireApp:
             self.multiple_choice_options.append(option)
 
     def scatter_plot(self, is_category: bool, category_name: str = None) -> Tuple[plt.Figure, plt.Axes, List[dict]]:
-        """ Creates a scatter plot for categories or use cases.
+        """ Creates a scatter plot for categories or use cases. Displays potential ("Nutzen") on the y-axis,
+        effort ("Aufwand") on the x-axis and risk ("Risiko") as the color of the scatter points.
 
         Args:
             is_category (bool): Determines whether this is a category plot or a use-case plot.
@@ -860,10 +1035,6 @@ class ML4FWQuestionnaireApp:
         # Show the plot
         self.use_case_canvas.draw()
 
-    def quit_application(self) -> None:
-        """ Exits the application. """
-        self.master.quit()
-
     def save(self, frame: ctk.CTkFrame) -> None:
         """ Saves the current state of the questionnaire to a file.
 
@@ -878,6 +1049,10 @@ class ML4FWQuestionnaireApp:
         save_successful_label.pack(pady=10)
         save_successful_label.after(1500, save_successful_label.destroy)
 
+    def quit_application(self) -> None:
+        """ Quits the entire application. """
+        self.master.quit()
+
     @staticmethod
     def clear_frame(frame: ctk.CTkFrame) -> None:
         """ Clears all widgets from the specified frame.
@@ -886,101 +1061,11 @@ class ML4FWQuestionnaireApp:
             frame (ctk.CTkFrame): The frame to be cleared.
         """
         for widget in frame.winfo_children():
-            widget.pack_forget()
+            if isinstance(widget, ctk.CTkToplevel):
+                widget.destroy()
+            else:
+                widget.pack_forget()
         frame.pack_forget()
-
-
-class InfoIcon:
-    """ Creates a CTk canvas that contains an info icon.
-
-    Args:
-        master (ctk.CTkFrame): The master frame for the info icon.
-        icon_size (int): The size of the icon in pixels.
-        window_geometry (str): The geometry of the info window (e.g., "300x200").
-        text_font (tuple): The font settings for the info text, defined as a tuple.
-        wrap_length (int): Wrap length for info text given in number of charakters.
-    """
-
-    def __init__(self, master: ctk.CTkFrame, icon_size: int, window_geometry: str, text_font: tuple, wrap_length: int):
-        self.master = master
-        self.icon_size = icon_size
-        self.window_geometry = window_geometry
-        self.text_font = text_font
-        self.info_text = ""
-        self.info_window_open = False
-        self.canvas = self.create_info_icon()
-        self.wrap_length = wrap_length
-
-    def set_info_text(self, info_text: str):
-        """ Sets the info text to be displayed in the info window.
-
-        Args:
-            info_text (str): The text to display when the info icon is clicked.
-        """
-        self.info_text = info_text
-
-    def place(self, x_pos: int, y_pos):
-        """ Places the info icon at the specified coordinates.
-
-        Args:
-            x_pos (int): The x-coordinate for placement.
-            y_pos (int): The y-coordinate for placement.
-        """
-        self.canvas.place(x=x_pos, y=y_pos)
-
-    def create_info_icon(self) -> ctk.CTkCanvas:
-        """ Creates the info icon canvas with a circular shape and "i" text.
-
-        Returns:
-            ctk.CTkCanvas: The canvas containing the info icon.
-        """
-        self.canvas = ctk.CTkCanvas(self.master, width=self.icon_size, height=self.icon_size,
-                                    highlightthickness=0, bg="#2E2E2E")
-
-        # Define colors
-        border_color = "#6495ED"
-        text_color = border_color
-
-        # Draw the circle
-        self.canvas.create_oval(int(self.icon_size * 1 / 10), int(self.icon_size * 1 / 10),
-                                int(self.icon_size * 9 / 10), int(self.icon_size * 9 / 10),
-                                fill="white", outline=border_color, width=2)
-
-        # Draw the "i"
-        self.canvas.create_text(int(self.icon_size) / 2, int(self.icon_size) / 2, text="i",
-                                font=("Arial", int(self.icon_size / 2.2), "bold"),
-                                fill=text_color)
-        self.canvas.bind("<Button-1>", lambda event: self.open_info_window(event, info_text=self.info_text))
-        return self.canvas
-
-    def open_info_window(self, event, info_text):
-        """ Opens a new window displaying the info text when the icon is clicked.
-
-        Args:
-            event: The event that triggered this method.
-            info_text (str): The text to display in the info window.
-        """
-        if not self.info_window_open:
-            info_window = ctk.CTkToplevel(self.master)
-            info_window.title("Information")
-            info_window.geometry(self.window_geometry)
-            info_label = ctk.CTkLabel(info_window, text=info_text, font=self.text_font, wraplength=self.wrap_length,
-                                      justify="left")
-            info_label.pack(pady=20)
-            close_button = ctk.CTkButton(info_window, text="Schließen",
-                                         command=lambda: self.close_info_window(info_window=info_window))
-            close_button.pack(pady=10)
-            info_window.attributes("-topmost", True)
-            self.info_window_open = True
-
-    def close_info_window(self, info_window):
-        """ Closes the info window.
-
-        Args:
-            info_window: The window to be closed.
-        """
-        info_window.destroy()
-        self.info_window_open = False
 
 
 if __name__ == "__main__":

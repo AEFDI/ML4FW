@@ -26,6 +26,7 @@ Attributes:
     intro_explanation (str): Additional explanations to the questionnaire.
     preference_info_text (str): Additional information about preference selection and global weights.
     option_info (str): Additional info about the option selection.
+    possible_condition_types (list): list of strings describing all possible condition types.
     max_weight (int): The maximum weight value for criteria.
     min_weight (int): The minimum weight value for criteria.
     min_substations_for_clustering (int): The minimum number of substations required for clustering.
@@ -95,11 +96,11 @@ category_criteria_description = {category_names[0]: {"Genauigkeit": "Beschreibt 
                                                                     "wird.",
                                                      "Interpretierbarkeit": "Beschreibt die Interpretierbarkeit und "
                                                                             "Transparenz der erstellen Prognose. Es "
-                                                                            "gibt ML-Ansätze, wie bspw. klassische "
+                                                                            "gibt ML-Ansätze, wie z.B. klassische "
                                                                             "neuronale Netze, welche als Black Box "
                                                                             "fungieren und damit nur schwer "
                                                                             "zu interpretieren sind. Andere Modelle, "
-                                                                            "welche bereits mit Hinsicht auf "
+                                                                            "welche bereits hinsichtlich "
                                                                             "Nachvollziehbarkeit erstellt wurden, "
                                                                             "benötigen dafür aber oftmals mehr Daten "
                                                                             "oder sind schwerer anzuwenden.",
@@ -120,13 +121,13 @@ category_criteria_description = {category_names[0]: {"Genauigkeit": "Beschreibt 
                                                                           "das überwachte System im Normalzustand "
                                                                           "befindet.",
                                                      "Fehlerfrüherkennung": "Beschreibt die Fähigkeit des ML-Modells "
-                                                                            "Fehler bereits in der Entstehung (d. h. "
+                                                                            "Fehler bereits in der Entstehung ( "
                                                                             "bevor sie kritisch für den Betrieb "
                                                                             "werden) zu detektieren.",
                                                      "Interpretierbarkeit": "Beschreibt die Interpretierbarkeit und "
-                                                                            "Transparenz der Modelle mit Hinsicht auf "
+                                                                            "Transparenz der Modelle hinsichtlich "
                                                                             "erkannte Fehler oder Anomalien. Es "
-                                                                            "gibt ML-Ansätze, wie bspw. klassische "
+                                                                            "gibt ML-Ansätze, wie z.B. klassische "
                                                                             "Autoencoder, welche als Black Box "
                                                                             "fungieren und damit nicht ohne "
                                                                             "Zusatzaufwand interpretierbar sind. "
@@ -134,7 +135,7 @@ category_criteria_description = {category_names[0]: {"Genauigkeit": "Beschreibt 
                                                                             "Hinsicht auf Nachvollziehbarkeit "
                                                                             "erstellt wurden, benötigen dafür aber "
                                                                             "oftmals mehr Daten oder sind schwerer "
-                                                                            "anzuwenden)."},
+                                                                            "anzuwenden."},
                                  category_names[2]: {"Erkennen von vorhandenen Leckagen": "Beschreibt die Fähigkeit "
                                                                                           "des ML-Modells "
                                                                                           "vorhandene Leckagen zu "
@@ -154,28 +155,28 @@ category_criteria_description = {category_names[0]: {"Genauigkeit": "Beschreibt 
                                                                           "das überwachte System im Normalzustand "
                                                                           "befindet.",
                                                      "Interpretierbarkeit": "Beschreibt die Interpretierbarkeit und "
-                                                                            "Transparenz der Modelle mit Hinsicht auf "
+                                                                            "Transparenz der Modelle hinsichtlich "
                                                                             "erkannte Leckagen. Es "
                                                                             "gibt ML-Ansätze, welche als Black Box "
                                                                             "fungieren und nur schwer zu "
                                                                             "interpretieren sind. Andere Modelle, "
-                                                                            "welche bereits mit Hinsicht auf "
+                                                                            "welche bereits hinsichtlich "
                                                                             "Nachvollziehbarkeit erstellt wurden, "
                                                                             "benötigen dafür aber oftmals mehr Daten "
-                                                                            "oder sind schwerer anzuwenden)."},
+                                                                            "oder sind schwerer anzuwenden."},
                                  category_names[3]: {"Energieeffizienz": "Beschreibt den potenziell positiven Einfluss "
                                                                          "des ML-Use-Cases auf die Energieeffizienz "
                                                                          "des Wärmenetzes",
                                                      "Interpretierbarkeit": "Beschreibt die Interpretierbarkeit und "
-                                                                            "Transparenz der Modelle mit Hinsicht auf "
+                                                                            "Transparenz der Modelle hinsichtlich "
                                                                             "die getroffenen Entscheidungen. Es "
                                                                             "gibt ML-Ansätze, welche als Black Box "
                                                                             "fungieren und nur schwer zu "
                                                                             "interpretieren sind. Andere Modelle, "
-                                                                            "welche bereits mit Hinsicht auf "
+                                                                            "welche bereits hinsichtlich "
                                                                             "Nachvollziehbarkeit erstellt wurden, "
                                                                             "benötigen dafür aber oftmals mehr Daten "
-                                                                            "oder sind schwerer anzuwenden).",
+                                                                            "oder sind schwerer anzuwenden.",
                                                      "Kundenkomfort": "Beschreibt zu welchem Grad Kundenkomfort bei "
                                                                       "der Erstellung von Netzbetriebsstrategien "
                                                                       "berücksichtigt wird."},
@@ -185,15 +186,15 @@ category_criteria_description = {category_names[0]: {"Genauigkeit": "Beschreibt 
                                                                                          "der Rücklauftemperatur der "
                                                                                          "HAST.",
                                                      "Interpretierbarkeit": "Beschreibt die Interpretierbarkeit und "
-                                                                            "Transparenz der Modelle mit Hinsicht auf "
+                                                                            "Transparenz der Modelle hinsichtlich "
                                                                             "die getroffenen Entscheidungen. Es "
                                                                             "gibt ML-Ansätze, welche als Black Box "
                                                                             "fungieren und nur schwer zu "
                                                                             "interpretieren sind. Andere Modelle, "
-                                                                            "welche bereits mit Hinsicht auf "
+                                                                            "welche bereits hinsichtlich "
                                                                             "Nachvollziehbarkeit erstellt wurden, "
                                                                             "benötigen dafür aber oftmals mehr Daten "
-                                                                            "oder sind schwerer anzuwenden).",
+                                                                            "oder sind schwerer anzuwenden.",
                                                      "Kundenkomfort": "Beschreibt zu welchem Grad Kundenkomfort bei "
                                                                       "der Erstellung von HAST-Betriebsstrategien "
                                                                       "berücksichtigt wird."}
@@ -221,6 +222,9 @@ with open("./data/Gewichtung_Info.txt", "r", encoding='utf-8') as file:
 
 with open("./data/Kategorieauswahl_Info.txt", "r", encoding='utf-8') as file:
     option_info = file.read()
+
+possible_condition_types = ["data availability", "label availability", "meta data availability", "user specific",
+                            "data quality"]
 
 max_weight = 5
 min_weight = 1

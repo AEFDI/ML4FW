@@ -13,7 +13,7 @@ from use_case import UseCase
 
 
 class Questionnaire:
-    """ Represents the questionnaire logic used in the Gui. A questionnaire contains categories, questions, and
+    """ Represents the questionnaire logic used in the GUI. A questionnaire contains categories, questions, and
     use cases for evaluation.
 
     Attributes:
@@ -21,11 +21,46 @@ class Questionnaire:
         global_weights (dict): Weights for global criteria.
         local_weights (dict): Weights for local criteria by category.
         final_category_scores (dict): Final scores for each category.
-        final_use_case_scores (dict): Final scores for each use case.
+        final_use_case_scores (dict): Final scores for each evaluated use case.
         categories (List[Category]): List of categories included in the questionnaire.
         chosen_categories (List[Category]): List of categories selected by the user.
         category_index (int): The current index of the category being evaluated.
+        question_index (int): Current question index in the questionnaire.
         completed (bool): Indicates if the questionnaire has been completed.
+
+    Methods:
+        set_categories(category_list: List[Category]):
+            Sets the categories for the questionnaire based on the selected options.
+
+        set_weights():
+            Sets the weights for the criteria based on the current answers to the preference questions in the category.
+
+        get_number_of_questions() -> int:
+            Retrieves the current total number of questions in the questionnaire.
+
+        get_progress() -> str:
+            Evaluates the current progress of the questionnaire and returns it as a string.
+
+        current_category() -> Union[Category, None]:
+            Retrieves the current Category object based on the current category index.
+
+        eval_category():
+            Evaluates the current category, including updating its scores based on risk, effort, and potential.
+
+        get_use_case(use_case_name: str, category_name: str) -> UseCase:
+            Retrieves a specific UseCase object by its name within the specified category.
+
+        next_category() -> bool:
+            Moves to the next category in the questionnaire, evaluating the current category if it has not been evaluated yet.
+
+        previous_category():
+            Moves to the previous category in the questionnaire.
+
+        get_general_question_list() -> List[Question]:
+            Retrieves the list of general questions from the questionnaire that are not specific to any category.
+
+        get_category_potential_and_effort(category: Category) -> Dict[str, float]:
+            Calculates the potential and effort scores for a given category based on predefined rankings.
     """
     def __init__(self):
         """ Initializes the Questionnaire object and its attributes. """
@@ -37,6 +72,7 @@ class Questionnaire:
         self.categories = None
         self.chosen_categories = None
         self.category_index = 0
+        self.question_index = 1
         self.completed = False
 
     def set_categories(self, category_list: List[Category]) -> None:
@@ -49,7 +85,8 @@ class Questionnaire:
         self.chosen_categories = category_list
 
     def set_weights(self) -> None:
-        """ Sets the weights for the criteria based on the current answers to the category's preference questions. """
+        """ Sets the weights for the criteria based on the current answers to the preference questions in the
+        category. """
         weights = {}
         category = self.current_category()
         for criteria in category.criteria_list:
@@ -65,7 +102,7 @@ class Questionnaire:
             self.local_weights[category.name] = weights
 
     def get_number_of_questions(self) -> int:
-        """ Gets the current total number of questions.
+        """ Retrieves the current total number of questions in the questionnaire.
 
         Returns:
             int: current total number of questions (this number can change due to consequence questions).
@@ -75,11 +112,21 @@ class Questionnaire:
             num_questions += len(category.questions)
         return num_questions
 
+    def get_progress(self) -> str:
+        """ Evaluates the current questionnaire progress and returns it as a string.
+
+        Returns:
+            str: progress in form of question_index / num_total_questions
+        """
+        num_questions = self.get_number_of_questions()
+        progress_text = f"Frage {self.question_index}/{num_questions}"
+        return progress_text
+
     def current_category(self) -> Union[Category, None]:
         """ Retrieves the current category based on the current category index.
 
         Returns:
-            Union[Category, None]: The current Category object or None if all categories have been evaluated.
+            Union[Category, None]: The current Category object, or None if all categories have been evaluated.
         """
         if self.category_index < len(self.categories):
             return self.categories[self.category_index]
@@ -112,7 +159,7 @@ class Questionnaire:
             pass
 
     def get_use_case(self, use_case_name: str, category_name: str) -> UseCase:
-        """ Retrieves a specific use case by name within the specified category.
+        """ Retrieves a specific UseCase object by its name within the specified category.
 
         Args:
             use_case_name (str): The name of the use case to retrieve.
@@ -122,7 +169,7 @@ class Questionnaire:
             UseCase: The requested UseCase object.
 
         Raises:
-            ValueError: If the use case could not be found in the specified category.
+            ValueError: If the use case is not found, raise a ValueError.
         """
         for category in self.chosen_categories:
             if category.name == category_name:
@@ -147,6 +194,8 @@ class Questionnaire:
     def previous_category(self) -> None:
         """ Moves to the previous category in the questionnaire. """
         self.category_index = max(self.category_index - 1, 0)
+        if self.completed:  # If the user navigates back after completing the questionnaire.
+            self.completed = False
 
     def get_general_question_list(self) -> List[Question]:
         """ Retrieves the list of general questions which are not category specific from the questionnaire.
@@ -169,7 +218,8 @@ class Questionnaire:
             category (Category): The category for which to calculate the scores.
 
         Returns:
-            Dict[str, float]: A dictionary containing the calculated scores for the category.
+            Dict[str, float]: A dictionary containing the calculated potential and effort scores for the
+            specified category, as well as a default risk entry for each category.
         """
         category_scores = {"Risk": 0}  # initialize risk value
         predefined_ranking_df = pd.read_csv(predefined_category_ranking_path, sep=";", index_col="Unnamed: 0")

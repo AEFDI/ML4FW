@@ -3,9 +3,55 @@ from condition_definition import *
 
 """
 Script for defining all use cases and assigning predefined score values, conditions and detail information.
+
+Overview of Use Cases:
+
+1. **Forecasting Use Cases**
+   - **Wärmelastprognosen anhand detaillierter Netzdaten**: Heat load prediction for the entire district heating 
+   network using multiple LSTM architectures.
+   - **Wärmelastprognose für Fernwärmenetze mit Berücksichtigung der Netzstruktur**: Prediction of the entire 
+   network based on heat load profiles of individual buildings and network topology using Graph RNNs.
+   - **Wärmelastprognose für einzelne Gebäude und Stadtviertel**: Short-term load forecasting based on historical load 
+   and weather data using ANN in combination with multiple linear regression.
+   - **Echtzeitprognose für Wärmelasten in Fernwärmenetzen**: Short-term heat load predictions in real-time using LSTM.
+   - **Prognose für Wärmespeicher und Spitzenlastmanagement**: Prediction of heat loads and storage levels for peak 
+   load reduction using incremental learning LSTM.
+   - **Haushaltsbezogene Wärmelastprognose für individuelle Gebäude**: Heat demand forecasting at the household level 
+   using SVR and PSO.
+
+2. **Predictive Maintenance for Substations**
+   - **Anomalieerkennung durch Ensemblemodellierung**: Use of simple ML models for each substation and clustering 
+   of substations.
+   - **Anomalieerkennung mithilfe von Clusteringmethoden**: Identification of outlier HASTs through clustering 
+   techniques.
+   - **Rekonstruktionsbasierte Normalverhaltensmodelle**: Application of reconstruction-based normal behavior models 
+   to identify deviations.
+   - **Regressionsbasierte Normalverhaltensmodelle**: Detection of deviations using regression-based models.
+
+3. **Pipeline Maintenance**
+   - **Leckagenerkennung auf Basis von Infrarotbildern**: Automated ML image analysis procedures for locating leaks.
+   - **Leckagenerkennung auf Basis von Drucksensorik**: Combination of hydraulic simulation with XGBoost for leak 
+   identification.
+   - **Klassifikation von Rohrzuständen auf Basis von Akustik- und Vibrationssignalen**: Assignment of acoustic 
+   measurements to pipe conditions.
+
+4. **Control Strategies for District Heating Network**
+   - **Optimierung des Netzbetriebs mithilfe ML-basierter Netzsimulation**: Efficient simulation model for optimizing 
+   district heating network operations.
+   - **Spitzenlastreduzierung**: Reinforcement learning to determine a strategy for reducing peak loads.
+   - **Flexibilitätsnutzung von Gebäuden durch die Steuerung der Wärmezufuhr**: Utilizing thermostat-controlled heat 
+   storage options for flexibility.
+   - **ML-Ersatzmodell für thermo-hydraulische Simulationen**: Graph Neural Network to replace thermo-hydraulic 
+   simulation models.
+
+5. **Control Strategies for Substations**
+   - **ML-unterstützte Regleroptimierung**: Automated adjustment of control parameters to individual operating 
+   conditions.
+   - **ML-basierte Optimierung von Fernwärme Sekundärkreisen**: Creation of an ML model for optimized control of heat 
+   flow.
 """
 
-# Forecasting Use-Cases
+# Forecasting Use Cases
 c1_uc1 = UseCase(name="Wärmelastprognosen anhand detaillierter Netzdaten",
                  description="Wärmelastvorhersage für gesamten Fernwärmenetz mithilfe von mehreren LSTM-Architekturen",
                  predefined_potential={"Genauigkeit": 5,
@@ -184,7 +230,7 @@ c1_uc6 = UseCase(name="Haushaltsbezogene Wärmelastprognose für individuelle Ge
 
 # Predictive Maintenance for Substations
 c2_uc1 = UseCase(name="Anomalieerkennung durch Ensemblemodellierung",
-                 description="Dieser Use-Case setzt einfache ML-Modelle für jede einzelne Hausstation ein und führt "
+                 description="Dieser Use Case setzt einfache ML-Modelle für jede einzelne Hausstation ein und führt "
                              "parallel dazu ein Clustering der Hausstationen in verschiedene Gruppen durch. Auf Basis, "
                              "der dieser zwei Informationslevel kann ein Ensemble Modell erstellt werden, welches das "
                              "Erkennen von fehlerhaften Hausstationen ermöglicht.",
@@ -209,7 +255,7 @@ c2_uc1 = UseCase(name="Anomalieerkennung durch Ensemblemodellierung",
                                                no_history_condition
                                                ],
                  literature_source="https://doi.org/10.1016/j.eswa.2022.116864",
-                 pro_contra_arguments={"pro": ["Gute Skalierbarkeit des Use-Cases",
+                 pro_contra_arguments={"pro": ["Gute Skalierbarkeit des Use Cases",
                                                "Wenige Fehlalarme durch den Ensemble-Ansatz",
                                                "Benötigt nur wenige Monate an Daten"
                                                ],
@@ -219,8 +265,8 @@ c2_uc1 = UseCase(name="Anomalieerkennung durch Ensemblemodellierung",
                                                   ]}
                  )
 
-c2_uc2 = UseCase(name="Anomalie-erkennung mithilfe von Clusteringmethoden",
-                 description="Durch die Anwendung von Clustering-Verfahren auf Basis von Zeitreihendaten der HASTs "
+c2_uc2 = UseCase(name="Anomalieerkennung mithilfe von Clusteringmethoden",
+                 description="Durch die Anwendung von Clusteringverfahren auf Basis von Zeitreihendaten der HASTs "
                              "werden Ausreißer-HASTs identifiziert.",
                  predefined_potential={"Fehlererkennung": 3,
                                        "Identifikation von Ursachen": 1,
@@ -251,7 +297,7 @@ c2_uc2 = UseCase(name="Anomalie-erkennung mithilfe von Clusteringmethoden",
                  )
 
 c2_uc3 = UseCase(name="Rekonstruktionsbasierte Normalverhaltensmodelle",
-                 description="In diesem Use-Case werden auf Basis der Wärmeleistungsdaten Abweichungen vom normalen "
+                 description="In diesem Use Case werden auf Basis der Wärmeleistungsdaten Abweichungen vom normalen "
                              "Verhalten von HASTs durch die Anwendung von rekonstruktionsbasierten "
                              "Normalverhaltensmodellen wie beispielsweise Autoencodern ermöglicht. "
                              "Diese erlernen das normale Verhalten auf Basis von historischen Daten der HASTs.",
@@ -398,7 +444,7 @@ c3_uc2 = UseCase(name="Leckagenerkennung auf Basis von Drucksensorik",
                  )
 
 c3_uc3 = UseCase(name="Klassifikation von Rohrzuständen auf Basis von Akustik- und Vibrationssignalen",
-                 description="Dieser Use-Case nutzt direkte Klassifikationsverfahren wie beispielsweise Support Vector "
+                 description="Dieser Use Case nutzt direkte Klassifikationsverfahren wie beispielsweise Support Vector "
                              "Machines für die Zuordnung von akustischen Messwerten zu festgelegten Rohrzuständen.",
                  predefined_potential={"Erkennen von vorhandenen Leckagen": 5,
                                        "Ortung von Leckagen": 2,
@@ -471,7 +517,7 @@ c4_uc1 = UseCase(name="Optimierung des Netzbetriebs mithilfe ML-basierter Netzsi
                  )
 
 c4_uc2 = UseCase(name="Spitzenlastreduzierung",
-                 description="Dieser Use-Case nutzt einen Reinforcement Learning Ansatz, welcher auf Basis eines "
+                 description="Dieser Use Case nutzt einen Reinforcement Learning Ansatz, welcher auf Basis eines "
                              "Netzmodells, einer thermodynamischen Modellierung der Gebäude im Fernwärmenetz und "
                              "eines agentenbasierten Nutzerkomfortmodells eine optimale Strategie für die Reduktion "
                              "von Spitzenlasten ermittelt.",
@@ -506,7 +552,7 @@ c4_uc2 = UseCase(name="Spitzenlastreduzierung",
                                                   "Fernwärmenetz muss modelliert werden"]}
                  )
 c4_uc3 = UseCase(name="Flexibilitätsnutzung von Gebäuden durch die Steuerung der Wärmezufuhr",
-                 description="In diesem Use-Case wird ein Reinforcement Learning Algorithmus verwendet, um "
+                 description="In diesem Use Case wird ein Reinforcement Learning Algorithmus verwendet, um "
                              "thermostatgesteuerte Wärmespeichermöglichkeiten wie Gebäudehüllen im Fernwärmenetz zu "
                              "flexibilisieren. Ziel ist die Nutzung dieser Flexibilitäten für Spitzenlastreduktionen "
                              "und oder Energie-Arbitrage.",
@@ -541,7 +587,7 @@ c4_uc3 = UseCase(name="Flexibilitätsnutzung von Gebäuden durch die Steuerung d
                  )
 
 c4_uc4 = UseCase(name="ML-Ersatzmodell für thermo-hydraulische Simulationen",
-                 description="Dieser Use-Case verwendet ein Graph-Neural-Network, um bestehende aufwändige "
+                 description="Dieser Use Case verwendet ein Graph Neural Network, um bestehende aufwändige "
                              "thermo-hydraulische Simulationsmodelle durch ein schnelleres, effizienteres "
                              "ML-Modell zu ersetzen und Durchflussraten, sowie Temperaturen an verschiedenen "
                              "Stellen im Netz zu simulieren.",
@@ -575,9 +621,9 @@ c4_uc4 = UseCase(name="ML-Ersatzmodell für thermo-hydraulische Simulationen",
 
 # Control strategies for substations
 c5_uc1 = UseCase(name="ML-unterstützte Regleroptimierung",
-                 description="Dieser Use-Case nutzt die Anwendbarkeit und Effektivität von Methoden des maschinellen "
-                             "Lernens (ML) für das Auto- und Continuous-Commissioning von Regelgeräten an realen "
-                             "Fernwärme-Hausstationen. Damit wird die automatisierte Anpassung von Regelparametern, "
+                 description="Dieser Use Case nutzt die Anwendbarkeit und Effektivität von Methoden des maschinellen "
+                             "Lernens (ML) für das Auto- und Continuous Commissioning von Regelgeräten an realen "
+                             "Fernwärmehausstationen. Damit wird die automatisierte Anpassung von Regelparametern, "
                              "die sich zunächst in der Werkeinstellung befinden, an die individuellen "
                              "Betriebsbedingungen des jeweiligen Gebäudes erreicht. Dies stellt sicher, dass eine "
                              "optimale Regelung der Hausstationen (HAST) erreicht wird.",
@@ -609,8 +655,8 @@ c5_uc1 = UseCase(name="ML-unterstützte Regleroptimierung",
                                                   ]}
                  )
 
-c5_uc2 = UseCase(name="ML-basierte Optimierung von Fernwärme-Sekundärkreisen",
-                 description="Dieser Use-Case befasst sich mit der Erstellung eines ML-Modells für die optimierte "
+c5_uc2 = UseCase(name="ML-basierte Optimierung von Fernwärme Sekundärkreisen",
+                 description="Dieser Use Case befasst sich mit der Erstellung eines ML-Modells für die optimierte "
                              "Steuerung des Wärmeflusses vom Primärkreislauf in den Sekundärkreislauf durch die "
                              "automatisierte Steuerung von Ventilen. Das Ventilsteuerungsmodell wird dabei auf "
                              "Basis historischer Ventileinstellungsdaten im Kontext mit der Wetterdaten erstellt "

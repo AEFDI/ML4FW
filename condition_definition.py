@@ -1,6 +1,106 @@
 
 """
-Script for defining all categories and assigning question answer lists.
+Script for defining conditions and assigning question answer lists.
+This script initializes all conditions that are used to determine the applicability of use cases based on
+specific criteria related to data availability, label availability, metadata availability, user-specific conditions,
+and data quality.
+
+Defined Conditions:
+
+1. no_flow_rate_condition: 
+   Checks if flow rate data is not available.
+
+2. no_supply_return_condition: 
+   Checks if supply and return temperature data is not available.
+
+3. no_network_temperatures_condition: 
+   Checks if network temperature data is not available.
+
+4. no_ambient_temperature_condition: 
+   Checks if ambient temperature data is not available.
+
+5. no_heat_data_condition:
+   Checks if heat output data is not available.
+
+6. no_energy_data_condition:
+   Checks if energy data is not available.
+
+7. no_pressure_data_condition: 
+   Checks if pressure data is not available.
+
+8. no_heat_storage_condition: 
+   Checks if data regarding heat storage is not available.
+
+9. no_vibration_data_condition:
+   Checks if vibration data is not available.
+
+10. no_substation_valve_data_condition: 
+    Checks if valve data in substations is not available.
+
+11. no_substation_pressure_data_condition: 
+    Checks if pressure data in substations is not available.
+
+12. no_substation_flow_rate_condition: 
+    Checks if flow rate data in substations is not available.
+
+13. no_weather_forecast_condition: 
+    Checks if weather forecast data in substations is not available.
+
+14. no_labels_substation_condition: 
+   Checks if maintenance label data in substations is not available.
+
+15. no_labels_network_condition: 
+    Checks if maintenance label data in the heating network is not available.
+
+16. no_network_topology_condition:
+    Checks if network topology data is not available (category 3 question for pipline maintenance).
+
+17. no_district_heating_topology_condition:
+    Checks if network topology data is not available (category 4 question for network operation strategies).
+
+18. no_heat_generation_data_condition: 
+    Checks if heat generation data is not available.
+
+19. no_indoor_temperature_condition: 
+    Checks if indoor temperature data is not available.
+
+20. no_building_data_condition: 
+    Checks if building metadata is not available.
+
+21. no_building_envelope_condition: 
+    Checks if building envelope data is not available.
+
+22. no_comfort_data_condition: 
+    Checks if user comfort data is not available.
+
+23. no_substation_meta_data_condition: 
+    Checks if metadata for substations is not available.
+
+24. no_waiting_condition: 
+    Checks for user-specific preference related to waiting for the right environmental conditions.
+
+25. pipeline_depth_condition: 
+    Verifies user-specific conditions regarding pipeline depth.
+
+26. small_num_substation_condition: 
+    Checks if the number of substations is below the specified minimum for clustering use cases.
+
+27. no_history_condition: 
+    Confirms that there are no historical data recorded. This makes use cases which a longer history
+    inapplicable.
+
+28. month_history_condition: 
+    Verifies if there is some historical data for a few months. This makes use cases which a longer history
+    inapplicable.
+
+29. data_resolution_1min_condition: 
+    Checks if the data resolution is minute-based. This makes use cases which need higher resolutions inapplicable.
+
+30. data_resolution_1h_condition: 
+    Confirms if the data resolution is hour-based. This makes use cases which need higher resolutions inapplicable.
+
+31. data_resolution_days_condition: 
+    Ensures that the data resolution is daily. This makes use cases which need higher resolutions inapplicable.
 """
 
 from settings import min_substations_for_clustering
