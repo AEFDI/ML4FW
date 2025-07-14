@@ -1,7 +1,7 @@
 from typing import List, Dict
 
-from condition import Condition
-from question import Question
+from ml4fw_fragebogen.questionnaire_code.condition import Condition
+from ml4fw_fragebogen.questionnaire_code.question import Question
 
 
 class UseCase:

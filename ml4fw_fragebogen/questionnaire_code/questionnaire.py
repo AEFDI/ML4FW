@@ -3,13 +3,13 @@ from typing import List, Union, Dict
 
 import pandas as pd
 
-from category import Category
-from category_definition import preferences, general_questions
-from question import Question
-from question_definition import init_question
-from settings import preference_category_name, general_category_name, \
+from ml4fw_fragebogen.questionnaire_code.category import Category
+from ml4fw_fragebogen.definition_scripts.category_definition import preferences, general_questions
+from ml4fw_fragebogen.questionnaire_code.question import Question
+from ml4fw_fragebogen.definition_scripts.question_definition import init_question
+from ml4fw_fragebogen.definition_scripts.general_settings import preference_category_name, general_category_name, \
     global_criteria_mapping, predefined_category_ranking_path
-from use_case import UseCase
+from ml4fw_fragebogen.questionnaire_code.use_case import UseCase
 
 
 class Questionnaire:

@@ -1,8 +1,8 @@
 
 from typing import List, Dict
 
-from question import Question
-from settings import possible_condition_types
+from ml4fw_fragebogen.questionnaire_code.question import Question
+from ml4fw_fragebogen.definition_scripts.general_settings import possible_condition_types
 
 
 class Condition:

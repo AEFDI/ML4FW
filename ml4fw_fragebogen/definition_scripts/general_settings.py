@@ -6,7 +6,6 @@ and introductory text for the questionnaire.
 
 Attributes:
     base_path (str): The absolute path to the directory containing this script.
-    result_directory_absolute_path (str): The absolute path to the directory where results will be stored.
     result_directory_relative_path (str): The relative path to the results directory.
     predefined_category_ranking_path (str): The absolute path to the CSV file containing predefined category rankings.
     category_names (List[str]): A list of names for the different categories of ML use cases.
@@ -36,10 +35,10 @@ Attributes:
 import os
 from typing import List, Dict, Set
 
-base_path: str = os.path.dirname(os.path.abspath(__file__))
-result_directory_absolute_path: str = os.path.join(base_path, "ML4FW_Fragebogen_Ausgaben")
-result_directory_relative_path: str = "./ML4FW_Fragebogen_Ausgaben"
-predefined_category_ranking_path: str = os.path.join(base_path, "data", "Vordefiniertes_Kategorie_Ranking.csv")
+base_path: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+result_directory_relative_path: str = os.path.join(os.path.dirname(base_path), "ML4FW_Fragebogen_Ausgaben")
+data_dir_path = os.path.join(base_path, "data")
+predefined_category_ranking_path: str = os.path.join(data_dir_path, "Vordefiniertes_Kategorie_Ranking.csv")
 category_names: List[str] = ["Wärmebedarfsprognose", "Instandhaltung Hausstationen",
                              "Instandhaltung Rohrnetz", "Betriebsstrategien Wärmenetz",
                              "Betriebsstrategien Hausstationen"]
@@ -221,16 +220,16 @@ question_types: Set[str] = {"Preference", "Specification", "Potential", "Effort"
 preference_category_name: str = "Persönliche Gewichtung von Bewertungskriterien"
 general_category_name: str = "Kategorieübergreifende Fragen"
 
-with open("./data/Intro_Text.txt", "r", encoding='utf-8') as file:
+with open(os.path.join(data_dir_path, "Intro_Text.txt"), "r", encoding='utf-8') as file:
     intro_text: str = file.read()
 
-with open("./data/Intro_Erklärung.txt", "r", encoding='utf-8') as file:
+with open(os.path.join(data_dir_path, "Intro_Erklärung.txt"), "r", encoding='utf-8') as file:
     intro_explanation: str = file.read()
 
-with open("./data/Gewichtung_Info.txt", "r", encoding='utf-8') as file:
+with open(os.path.join(data_dir_path, "Gewichtung_Info.txt"), "r", encoding='utf-8') as file:
     preference_info_text: str = file.read()
 
-with open("./data/Kategorieauswahl_Info.txt", "r", encoding='utf-8') as file:
+with open(os.path.join(data_dir_path, "Kategorieauswahl_Info.txt"), "r", encoding='utf-8') as file:
     option_info: str = file.read()
 
 possible_condition_types: Set[str] = {"data availability", "label availability", "meta data availability",

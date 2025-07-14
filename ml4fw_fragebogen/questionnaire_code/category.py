@@ -1,8 +1,9 @@
 from typing import List, Union, Dict
 
-from question import Question
-from settings import category_criteria, global_criteria, preference_category_name, general_category_name
-from use_case import UseCase
+from ml4fw_fragebogen.questionnaire_code.question import Question
+from ml4fw_fragebogen.definition_scripts.general_settings import category_criteria, global_criteria, \
+    preference_category_name, general_category_name
+from ml4fw_fragebogen.questionnaire_code.use_case import UseCase
 
 
 class Category:
@@ -10,7 +11,7 @@ class Category:
     Represents a category in the questionnaire, containing questions and use cases related to that category.
     The category class also provides evaluation functions for aggregation of scores.
     The questionnaire is expected to contain one Category object for each use case category that is defined in the
-    category_names variable in settings.py.
+    category_names variable in general_settings.py.
     Additionally, there are the preferences category which is used to weight the global (cross category) evaluation
     criteria and the general questions category which is used for questions that are important for most use case
     categories.

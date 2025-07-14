@@ -6,9 +6,10 @@ categories.
 
 from typing import List
 
-from question import Question, generate_preference_questions
-from settings import category_names, global_criteria, category_criteria, min_substations_for_clustering, \
-    max_pipeline_depth, category_descriptions, global_criteria_description, category_criteria_description
+from ml4fw_fragebogen.questionnaire_code.question import Question, generate_preference_questions
+from ml4fw_fragebogen.definition_scripts.general_settings import category_names, global_criteria, category_criteria, \
+    min_substations_for_clustering, max_pipeline_depth, category_descriptions, global_criteria_description, \
+    category_criteria_description
 
 init_question = Question(name="Init",
                          question_text="Bitte wählen Sie mindestens eine der folgenden 5 ML-Use-Case-Kategorien. Es "
@@ -440,8 +441,8 @@ gen_consequence_questions: List[Question] = [gen_data_storage, gen_ambient_temp_
                                              gen_pressure_2, gen_pressure_3, gen_weather_forecast_2]
 
 # category 1 questions
-global_preference_questions: List[Question] = generate_preference_questions(criteria_list=global_criteria,
-                                                                            criteria_description=global_criteria_description)
+args = {"criteria_list": global_criteria, "criteria_description": global_criteria_description}
+global_preference_questions: List[Question] = generate_preference_questions(**args)
 
 # category 1 questions
 category_name: str = category_names[0]

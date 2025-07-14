@@ -1,6 +1,3 @@
-from condition_definition import *
-from use_case import UseCase
-
 """
 Script for defining all use cases and assigning predefined score values, conditions and detail information.
 
@@ -50,6 +47,9 @@ Overview of Use Cases:
    - **ML-basierte Optimierung von Fernwärme Sekundärkreisen**: Creation of an ML model for optimized control of heat 
    flow.
 """
+
+from ml4fw_fragebogen.definition_scripts.condition_definition import *
+from ml4fw_fragebogen.questionnaire_code.use_case import UseCase
 
 # Forecasting Use Cases
 c1_uc1 = UseCase(name="Wärmelastprognosen anhand detaillierter Netzdaten",
@@ -228,6 +228,8 @@ c1_uc6 = UseCase(name="Haushaltsbezogene Wärmelastprognose für individuelle Ge
                                                   ]}
                  )
 
+cat_1_use_case: List[UseCase] = [c1_uc1, c1_uc2, c1_uc3, c1_uc4, c1_uc5, c1_uc6]
+
 # Predictive Maintenance for Substations
 c2_uc1 = UseCase(name="Anomalieerkennung durch Ensemblemodellierung",
                  description="Dieser Use Case setzt einfache ML-Modelle für jede einzelne Hausstation ein und führt "
@@ -374,6 +376,8 @@ c2_uc4 = UseCase(name="Regressionsbasierte Normalverhaltensmodelle",
                                                   ]}
                  )
 
+cat_2_use_cases: List[UseCase] = [c2_uc1, c2_uc2, c2_uc3, c2_uc4]
+
 # Pipeline Maintenance
 c3_uc1 = UseCase(name="Leckagenerkennung auf Basis von Infrarotbildern",
                  description="Automatisierte ML-Bildanalyseverfahren werden genutzt, um Leckagen auf Infrarotbildern "
@@ -477,6 +481,8 @@ c3_uc3 = UseCase(name="Klassifikation von Rohrzuständen auf Basis von Akustik- 
                                                   "Viele Fehlalarme sind möglich"
                                                   ]}
                  )
+
+cat_3_use_cases: List[UseCase] = [c3_uc1, c3_uc2, c3_uc3]
 
 # Control strategies for dh network
 c4_uc1 = UseCase(name="Optimierung des Netzbetriebs mithilfe ML-basierter Netzsimulation.",
@@ -619,6 +625,8 @@ c4_uc4 = UseCase(name="ML-Ersatzmodell für thermo-hydraulische Simulationen",
                                                   ]}
                  )
 
+cat_4_use_cases: List[UseCase] = [c4_uc1, c4_uc2, c4_uc3, c4_uc4]
+
 # Control strategies for substations
 c5_uc1 = UseCase(name="ML-unterstützte Regleroptimierung",
                  description="Dieser Use Case nutzt die Anwendbarkeit und Effektivität von Methoden des maschinellen "
@@ -688,3 +696,5 @@ c5_uc2 = UseCase(name="ML-basierte Optimierung von Fernwärme Sekundärkreisen",
                                                   "Daten aus Wettervorhersagen werden benötigt"
                                                   ]}
                  )
+
+cat_5_use_cases: List[UseCase] = [c5_uc1, c5_uc2]

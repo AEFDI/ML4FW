@@ -16,9 +16,18 @@ category_5: Use case category 5 (Betriebsstrategien Hausstationen).
 
 from typing import Dict
 
-from category import Category
-from settings import preference_category_name, general_category_name
-from use_case_definition import *
+from ml4fw_fragebogen.questionnaire_code.category import Category
+from ml4fw_fragebogen.definition_scripts.general_settings import preference_category_name, general_category_name, \
+    category_names
+from ml4fw_fragebogen.definition_scripts.use_case_definition import cat_1_use_case, cat_2_use_cases, cat_3_use_cases, \
+    cat_4_use_cases, cat_5_use_cases
+
+from ml4fw_fragebogen.definition_scripts.question_definition import gen_default_questions, gen_consequence_questions, \
+    global_preference_questions, cat_1_local_preference_questions, cat_1_default_questions, \
+    cat_1_consequence_questions, cat_2_local_preference_questions, cat_2_default_questions, \
+    cat_2_consequence_questions, cat_3_local_preference_questions, cat_3_default_questions, \
+    cat_3_consequence_questions, cat_4_local_preference_questions, cat_4_default_questions, \
+    cat_4_consequence_questions, cat_5_local_preference_questions, cat_5_default_questions, cat_5_consequence_questions
 
 preferences = Category(name=preference_category_name, color="gray17",
                        default_questions=global_preference_questions, consequence_questions=[],
@@ -32,27 +41,27 @@ general_questions = Category(name=general_category_name, color="gray17",
 category_1 = Category(name=category_names[0], color="#179c7d",
                       default_questions=cat_1_local_preference_questions + cat_1_default_questions,
                       consequence_questions=cat_1_consequence_questions,
-                      use_cases=[c1_uc1, c1_uc2, c1_uc3, c1_uc4, c1_uc5, c1_uc6])
+                      use_cases=cat_1_use_case)
 
 category_2 = Category(name=category_names[1], color="#005b7f",
                       default_questions=cat_2_local_preference_questions + cat_2_default_questions,
                       consequence_questions=cat_2_consequence_questions,
-                      use_cases=[c2_uc1, c2_uc2, c2_uc3, c2_uc4])
+                      use_cases=cat_2_use_cases)
 
 category_3 = Category(name=category_names[2], color="#f58220",
                       default_questions=cat_3_local_preference_questions + cat_3_default_questions,
                       consequence_questions=cat_3_consequence_questions,
-                      use_cases=[c3_uc1, c3_uc2, c3_uc3])
+                      use_cases=cat_3_use_cases)
 
 category_4 = Category(name=category_names[3], color="#964471",
                       default_questions=cat_4_local_preference_questions + cat_4_default_questions,
                       consequence_questions=cat_4_consequence_questions,
-                      use_cases=[c4_uc1, c4_uc2, c4_uc3, c4_uc4])
+                      use_cases=cat_4_use_cases)
 
 category_5 = Category(name=category_names[4], color="#778c97",
                       default_questions=cat_5_local_preference_questions + cat_5_default_questions,
                       consequence_questions=cat_5_consequence_questions,
-                      use_cases=[c5_uc1, c5_uc2])
+                      use_cases=cat_5_use_cases)
 
 category_dict: Dict[str, Category] = {category_names[0]: category_1,
                                       category_names[1]: category_2,

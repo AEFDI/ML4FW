@@ -103,8 +103,8 @@ Defined Conditions:
     Ensures that the data resolution is daily. This makes use cases which need higher resolutions inapplicable.
 """
 
-from condition import Condition
-from question_definition import *
+from ml4fw_fragebogen.questionnaire_code.condition import Condition
+from ml4fw_fragebogen.definition_scripts.question_definition import *
 
 no_flow_rate_condition = Condition(condition_type="data availability",
                                    question_answer_list=[{gen_flow_rate_1.question_text: "Nein"},

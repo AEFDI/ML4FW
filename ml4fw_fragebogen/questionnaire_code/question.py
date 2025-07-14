@@ -1,7 +1,7 @@
 
 from typing import List, Union, Dict
 
-from settings import min_weight, max_weight
+from ml4fw_fragebogen.definition_scripts.general_settings import min_weight, max_weight
 
 
 class Question:
