@@ -6,7 +6,6 @@ and introductory text for the questionnaire.
 
 Attributes:
     base_path (str): The absolute path to the directory containing this script.
-    result_directory_relative_path (str): The relative path to the results directory.
     predefined_category_ranking_path (str): The absolute path to the CSV file containing predefined category rankings.
     category_names (List[str]): A list of names for the different categories of ML use cases.
     category_descriptions (Dict[str, str]): A dictionary mapping category names to their descriptions.
@@ -36,7 +35,6 @@ import os
 from typing import List, Dict, Set
 
 base_path: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-result_directory_relative_path: str = os.path.join(os.path.dirname(base_path), "ML4FW_Fragebogen_Ausgaben")
 data_dir_path = os.path.join(os.path.dirname(base_path), "data")
 predefined_category_ranking_path: str = os.path.join(data_dir_path, "Vordefiniertes_Kategorie_Ranking.csv")
 category_names: List[str] = ["Wärmebedarfsprognose", "Instandhaltung Hausstationen",
@@ -79,7 +77,7 @@ global_criteria_description: Dict[str, str] = {
     "Automatisierungsgrad": "Grad der Automatisierung eines Use Cases. Diese Größe ist "
                             "insbesondere für den kontinuierlichen Betrieb einer ML-Lösung "
                             "nach der ersten Umsetzung relevant (Teil von Nutzen)."
-    }
+}
 global_criteria_mapping: Dict[str, List[str]] = {"Effort": ["Kostenaufwand", "Zeitaufwand", "Personalaufwand"],
                                                  "Potential": ["Versorgungssicherheit",
                                                                "Umweltauswirkungen / Dekarbonisierung",
@@ -206,7 +204,7 @@ category_criteria_description: Dict[str, Dict[str, str]] = {
                         "Kundenkomfort": "Beschreibt zu welchem Grad Kundenkomfort bei "
                                          "der Erstellung von HAST-Betriebsstrategien "
                                          "berücksichtigt wird."}
-    }
+}
 local_effort_criteria: List[str] = ["Datenaufbewahrungsaufwand",
                                     "Kontinuierlicher Aufwand",
                                     "Rechenaufwand",

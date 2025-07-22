@@ -11,8 +11,8 @@ from ml4fw_fragebogen.gui.info_icon import InfoIcon
 from ml4fw_fragebogen.questionnaire_code.questionnaire import Questionnaire
 from ml4fw_fragebogen.questionnaire_code.question import Question
 from ml4fw_fragebogen.questionnaire_code.use_case import UseCase
-from ml4fw_fragebogen.definition_scripts.general_settings import risk_colors, result_directory_relative_path, \
-    preference_category_name, general_category_name, intro_text, intro_explanation, preference_info_text, option_info
+from ml4fw_fragebogen.definition_scripts.general_settings import risk_colors, preference_category_name, \
+    general_category_name, intro_text, intro_explanation, preference_info_text, option_info
 
 
 class ML4FWQuestionnaireApp:
@@ -28,6 +28,7 @@ class ML4FWQuestionnaireApp:
 
     Args:
         master (ctk.CTk): The main window of the application.
+        main_dir (str): Directory where the main file is located. Result dir will be defined relative to this.
 
     Attributes:
         questionnaire (Questionnaire): The current questionnaire object.
@@ -78,8 +79,12 @@ class ML4FWQuestionnaireApp:
         add_use_case_plot(category_name): Adds the use case plot for a specific category.
     """
 
-    def __init__(self, master: ctk.CTk) -> None:
+    def __init__(self, master: ctk.CTk, main_dir: str) -> None:
         """ Initializes the ML4FWQuestionnaireApp and sets up the GUI layout. """
+        self.result_directory = os.path.join(main_dir, "ML4FW_Fragebogen_Ausgaben")
+        if not os.path.isdir(self.result_directory):
+            os.mkdir(self.result_directory)
+
         # GUI text settings
         self.win_height: int = 900
         self.win_width: int = int(self.win_height / 1.3)
@@ -286,9 +291,6 @@ class ML4FWQuestionnaireApp:
         # save_use_case_button be overwritten in add_use_case_plot depending on the category
         self.save_use_case_button: Union[ctk.CTkButton, None] = None
         self.use_case_result_close_button: Union[ctk.CTkButton, None] = None
-
-        if not os.path.isdir(result_directory_relative_path):
-            os.mkdir(result_directory_relative_path)
 
         self.info_window_open: bool = False
         self.init_options: bool = True
@@ -840,7 +842,7 @@ class ML4FWQuestionnaireApp:
         Args:
             frame (ctk.CTkFrame): The frame where the confirmation will be displayed.
         """
-        file_name = os.path.join(result_directory_relative_path, "Kategorievergleich.png")
+        file_name = os.path.join(self.result_directory, "Kategorievergleich.png")
         self.category_figure.savefig(file_name)
         save_successful_label = ctk.CTkLabel(frame, text="Grafik erfolgreich gespeichert!")
         save_successful_label.pack(pady=10)
@@ -853,7 +855,7 @@ class ML4FWQuestionnaireApp:
             category_name (str): The name of the category to which the use case belongs.
             frame (ctk.CTkFrame): The frame where the confirmation will be displayed.
         """
-        file_name = os.path.join(result_directory_relative_path, f"{category_name} Use-Case Vergleich.png")
+        file_name = os.path.join(self.result_directory, f"{category_name} Use-Case Vergleich.png")
         self.use_case_figure.savefig(file_name)
         save_successful_label = ctk.CTkLabel(frame, text="Grafik erfolgreich gespeichert!")
         save_successful_label.pack(pady=10)
@@ -898,7 +900,7 @@ class ML4FWQuestionnaireApp:
             self.load_explanation_label.pack(pady=20)
             self.load_path_box.pack(pady=20)
             # Insert default value into load_path_box
-            default_load_path = os.path.join(result_directory_relative_path, 'ML4FW_Fragebogen_Speicherstand.pkl')
+            default_load_path = os.path.join(self.result_directory, 'ML4FW_Fragebogen_Speicherstand_test.pkl')
             self.load_path_box.insert(0, default_load_path)
             self.load_button.pack(pady=20)
             self.start_menu_close_button.pack(pady=20)
@@ -1059,7 +1061,7 @@ class ML4FWQuestionnaireApp:
         Args:
             frame (ctk.CTkFrame): The frame where the confirmation will be displayed.
         """
-        file_name = os.path.join(result_directory_relative_path, 'ML4FW_Fragebogen_Speicherstand.pkl')
+        file_name = os.path.join(self.result_directory, 'ML4FW_Fragebogen_Speicherstand_test.pkl')
         with open(file_name, 'wb') as file:
             pkl.dump(self.questionnaire, file)
         file.close()
