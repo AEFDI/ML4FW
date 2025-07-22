@@ -26,24 +26,19 @@ Cases vorzunehmen und erleichter somit den Einstieg in tiefergehende Analysen vo
 - [Lizenz](#lizenz)
 
 # Installation / Anleitung
-Für die Anwendung des ML4FW-Fragebogens gibt es 4 mögliche Wege:
+Für die Anwendung des ML4FW-Fragebogens gibt es 3 mögliche Wege:
 
-## 1. Download der 'ML4FW_Fragebogen.exe' aus diesem Repositorium.
-Vorteil: Die Anwendung kann durch einen einfachen Doppelklick gestartet werden.
-Nachteil: Die Anwendung benötigt eine lange Zeit zum Starten.
-
-## 2. Download des 'ML4FW_Fragebogen.zip' Verzeichnisses
+## 1. Download des 'ML4FW_Fragebogen.zip' Verzeichnisses
 Das 'ML4FW_Fragebogen.zip'-Verzeichnis enthält zusätzlich zur 'ML4FW_Fragebogen.exe' einen '_internal'-Ordner. Durch das
 Entpacken des Verzeichnisses und das Ausführen der exe-Datei innerhalb des Verzeichnisses wird der Startvorgang der
 Anwendung erheblich beschleunigt.
 
 Vorteile: 
-    - Schnellerer Startvorgang.
-Nachteile: 
-    - Komplizierter als einfacher exe-Download.
+    - Unkomplizierter Startvorgang.
+Nachteile:
     - Nutzung unter Linux ist nicht möglich.
 
-## 3. Ausführen von 'ML4FW_Fragebogen.py'
+## 2. Ausführen von 'ML4FW_Fragebogen.py'
 Nach dem Klonen des Repositoriums via git und dem Installieren der benötigten [Packages](./requirements.txt) 
 (bspw. durch `pip install -r requirements.txt`), kann die Datei 'ML4FW_Fragebogen.py' gestartet werden.
 Dafür wird die Python Version [3.10.10](https://www.python.org/downloads/release/python-31010/) benötigt.
@@ -54,11 +49,10 @@ Vorteile:
 Nachteile: 
     - Installation von Python und grundlegende Python-Kenntnisse sind notwendig.
 
-## 4. Erstellen einer eigenen exe-Datei
+## 3. Erstellen einer eigenen exe-Datei
 Analog zu Möglichkeit 3 kann nach der Einrichtung einer Python-Umgebung eine eigene exe-Datei erstellt werden.
-Dafür kann bspw. das Python-Package [pyinstaller](https://pyinstaller.org/en/stable/) genutzt werden. Zum Erstellen der einfachen exe-Datei aus Schritt 1
-kann der Befehl `pyinstaller --onefile --noconsole --add-data "data;data" --hidden-import "ml4fw_fragebogen" ML4FW_Fragebogen.py` genutzt werden.
-Für Variante 2 kann der Befehl `pyinstaller --onedir --noconsole --add-data "data;data" --hidden-import "ml4fw_fragebogen" ML4FW_Fragebogen.py` verwendet 
+Dafür kann bspw. das Python-Package [pyinstaller](https://pyinstaller.org/en/stable/) genutzt werden. Zum Erstellen der exe-Datei aus Schritt 1
+kann der Befehl `pyinstaller --onedir --noconsole --add-data "data;data" --hidden-import "ml4fw_fragebogen" ML4FW_Fragebogen.py` verwendet 
 werden.
 
 Vorteil: 

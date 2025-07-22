@@ -842,6 +842,9 @@ class ML4FWQuestionnaireApp:
         Args:
             frame (ctk.CTkFrame): The frame where the confirmation will be displayed.
         """
+        if not os.path.isdir(self.result_directory):  # check if dir exists just to be sure
+            os.mkdir(self.result_directory)
+
         file_name = os.path.join(self.result_directory, "Kategorievergleich.png")
         self.category_figure.savefig(file_name)
         save_successful_label = ctk.CTkLabel(frame, text="Grafik erfolgreich gespeichert!")
@@ -855,6 +858,9 @@ class ML4FWQuestionnaireApp:
             category_name (str): The name of the category to which the use case belongs.
             frame (ctk.CTkFrame): The frame where the confirmation will be displayed.
         """
+        if not os.path.isdir(self.result_directory):  # check if dir exists just to be sure
+            os.mkdir(self.result_directory)
+
         file_name = os.path.join(self.result_directory, f"{category_name} Use-Case Vergleich.png")
         self.use_case_figure.savefig(file_name)
         save_successful_label = ctk.CTkLabel(frame, text="Grafik erfolgreich gespeichert!")
@@ -900,6 +906,8 @@ class ML4FWQuestionnaireApp:
             self.load_explanation_label.pack(pady=20)
             self.load_path_box.pack(pady=20)
             # Insert default value into load_path_box
+            if not os.path.isdir(self.result_directory):  # check if dir exists just to be sure
+                os.mkdir(self.result_directory)
             default_load_path = os.path.join(self.result_directory, 'ML4FW_Fragebogen_Speicherstand_test.pkl')
             self.load_path_box.insert(0, default_load_path)
             self.load_button.pack(pady=20)
@@ -1061,6 +1069,9 @@ class ML4FWQuestionnaireApp:
         Args:
             frame (ctk.CTkFrame): The frame where the confirmation will be displayed.
         """
+        if not os.path.isdir(self.result_directory):  # check if dir exists just to be sure
+            os.mkdir(self.result_directory)
+
         file_name = os.path.join(self.result_directory, 'ML4FW_Fragebogen_Speicherstand_test.pkl')
         with open(file_name, 'wb') as file:
             pkl.dump(self.questionnaire, file)
