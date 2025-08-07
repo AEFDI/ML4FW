@@ -1,6 +1,6 @@
 # ML4FW-Fragebogen - Eine Bewertungsmethode für Machine Learning Use Cases im Betrieb von Fernwärmenetzen
 
-Dieses Repositorium enthält den Sourcecode für eine Python-Anwendung zur Bewertung von 
+Dieser Ordner enthält den Sourcecode für eine Python-Anwendung zur Bewertung von 
 Machine Learning (ML) Use Cases im Bereich des Fernwärmenetzbetriebs hinsichtlich Nutzen, Aufwand und Risiko. 
 Dabei wird dem Nutzer innerhalb eines Fragebogens ermöglicht in ca. 15 min bis zu 19 ausgewählte ML Use Cases in bis 
 zu 5 Kategorien zu bewerten. Durch die Kombination der Antworten des Anwenders mit dem hinterlegtem 
