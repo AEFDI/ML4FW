@@ -1,9 +1,9 @@
 # ML4FW - Maschinelles Lernen in Fernwärme
 
 Dieses Repositorium enthält zwei zentrale Ergebnisse des Projekts ML4FW. Zum einen ist mit dem [ML4FW-Fragebogen](./Bewertungsmethode/README.md) 
-der Sourcecode für eine Python-Anwendung zur Bewertung von Machine Learning (ML) Use Cases im Bereich des 
-Fernwärmenetzbetriebs frei verfügbar, zum anderen ist Source Code zur Umsetzung eines ML Use Cases zur [Regleroptimierung](./Regleroptimierung/README.md)
-in diesem Repositorium abgelegt.
+der [Sourcecode](./Bewertungsmethode/) für eine Python-Anwendung zur Bewertung von Machine Learning (ML) Use Cases im Bereich des 
+Fernwärmenetzbetriebs frei verfügbar, zum anderen ist [Sourcecode](./Regleroptimierung/) zur Umsetzung eines ML Use Cases 
+zur [Regleroptimierung](./Regleroptimierung/README.md) in diesem Repositorium abgelegt.
 
 ### Weitere Infos zum Projekt
 
