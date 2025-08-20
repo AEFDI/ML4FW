@@ -10,6 +10,9 @@ zur [Regleroptimierung](./Regleroptimierung/README.md) in diesem Repositorium ab
 Weitere Informationen zum Projekt können unter den nachfolgenden Links gefunden werden:
 
 Abschlussbericht: Wird nach der Veröffentlichung verlinkt.
+
 [Future Energy Lab](https://future-energy-lab.de/projects/ml-in-fernwaerme/)
+
 [Fernwärme Digital](https://www.fernwaerme-digital.de/projekte/projekte/ml-in-fernwaerme-ml4fw)
+
 [Fraunhofer IEE](https://www.iee.fraunhofer.de/de/projekte/suche/2024/machine-learning-fernwaerme.html)

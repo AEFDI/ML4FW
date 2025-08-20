@@ -846,7 +846,7 @@ class ML4FWQuestionnaireApp:
             os.mkdir(self.result_directory)
 
         file_name = os.path.join(self.result_directory, "Kategorievergleich.png")
-        self.category_figure.savefig(file_name)
+        self.category_figure.savefig(file_name, dpi=300)
         save_successful_label = ctk.CTkLabel(frame, text="Grafik erfolgreich gespeichert!")
         save_successful_label.pack(pady=10)
         save_successful_label.after(1500, save_successful_label.destroy)
@@ -862,7 +862,7 @@ class ML4FWQuestionnaireApp:
             os.mkdir(self.result_directory)
 
         file_name = os.path.join(self.result_directory, f"{category_name} Use-Case Vergleich.png")
-        self.use_case_figure.savefig(file_name)
+        self.use_case_figure.savefig(file_name, dpi=300)
         save_successful_label = ctk.CTkLabel(frame, text="Grafik erfolgreich gespeichert!")
         save_successful_label.pack(pady=10)
         save_successful_label.after(1500, save_successful_label.destroy)
