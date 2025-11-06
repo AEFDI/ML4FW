@@ -1,4 +1,4 @@
-# ML4FW - Maschinelles Lernen in Fernwärme
+# ML4FW - Maschinelles Lernen in der Fernwärme
 
 Dieses Repositorium enthält zwei zentrale Ergebnisse des Projekts ML4FW. Zum einen ist mit dem [ML4FW-Fragebogen](./Bewertungsmethode/README.md) 
 der [Sourcecode](./Bewertungsmethode/) für eine Python-Anwendung zur Bewertung von Machine Learning (ML) Use Cases im Bereich des 
