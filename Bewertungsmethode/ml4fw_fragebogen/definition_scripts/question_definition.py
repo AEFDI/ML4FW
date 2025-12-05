@@ -41,7 +41,7 @@ gen_digital_data = Question(name="Digitalisierte Daten",
                                              "und die daraus gewonnen Erkenntnisse nicht im Verhältnis dazu stehen.",
                             consequence_description="Wenn Ihre Daten nicht in digitalisierter Form vorliegen, "
                                                     "steigt der Aufwand bei der Umsetzung von ML Use Cases. "
-                                                    "Insbesondere Use Cases mit einem hohen Datenaufbewahrungsaufwand"
+                                                    "Insbesondere Use Cases mit einem hohen Datenaufbewahrungsaufwand "
                                                     "werden einen höheren Aufwandswert erhalten. \n"
                                                     "Falls Ihre Daten hauptsächlich in digitalisierter Form vorliegen "
                                                     "wird Ihnen eine Folgefrage zur Datenaufbewahrung gestellt. Falls "
@@ -61,7 +61,7 @@ gen_data_storage = Question(name="Datenaufbewahrung",
                             description_text="Diese Frage soll Ihre Datenhaltungssituation erfassen.",
                             consequence_description="Wenn Ihre Daten nicht in Datenbanken vorliegen "
                                                     "steigt der Aufwand bei der Umsetzung von ML Use Cases. "
-                                                    "Insbesondere Use Cases mit einem hohen Datenaufbewahrungsaufwand"
+                                                    "Insbesondere Use Cases mit einem hohen Datenaufbewahrungsaufwand "
                                                     "werden einen höheren Aufwandswert erhalten.",
                             reason_to_exist="Diese Frage wird gestellt, um den Aufwand bei der Datenaufbewahrung für "
                                             "die Umsetzung von ML Use Cases zu schätzen."
@@ -77,7 +77,7 @@ gen_data_history = Question(name="Historienlänge",
                                              "Datenquellen und Datentypen verzichtet, da dies die Anzahl der Fragen "
                                              "und damit die Bearbeitungszeit des Fragebogens deutlich erhöhen würde "
                                              "und die daraus gewonnen Erkenntnisse nicht im Verhältnis dazu stehen.",
-                            consequence_description="Einige ML Use Cases benötigen lange Datenhistorien während andere"
+                            consequence_description="Einige ML Use Cases benötigen lange Datenhistorien während andere "
                                                     "auch mit kürzeren Historien auskommen können. Kurze "
                                                     "Datenhistorien können zum Ausschluss einiger Use Cases führen.",
                             reason_to_exist="Überprüfung der Umsetzungsvoraussetzungen für einige ML Use Cases."
@@ -109,14 +109,14 @@ gen_continual_operation = Question(name="Kontinuierlicher Betrieb",
                                    criteria="Kontinuierlicher Aufwand",
                                    description_text="Die Frage nach dem kontinuierlichen Betrieb dient der "
                                                     "Einschätzung des Aufwands nach der initialen Umsetzung des Use "
-                                                    "Cases. Besonders Use Cases mit einem hohen Automatisierungsgrad"
+                                                    "Cases. Besonders Use Cases mit einem hohen Automatisierungsgrad "
                                                     "haben einen geringen kontinuierlichen Aufwand, während andere "
                                                     "höhere Aufwände haben können.",
                                    consequence_description="Falls diese Frage mit 'Ja' beantwortet wird, steigt der "
-                                                           "Aufwand für die Umsetzung von ML Use Cases. Insbesondere"
-                                                           "Use Cases mit einem hohen Automatisierungsgrad werden nur"
+                                                           "Aufwand für die Umsetzung von ML Use Cases. Insbesondere "
+                                                           "Use Cases mit einem hohen Automatisierungsgrad werden nur "
                                                            "einen geringfügig höheren Aufwand erhalten.",
-                                   reason_to_exist="Diese Frage wird gestellt, um zu erfassen ob der kontinuierliche"
+                                   reason_to_exist="Diese Frage wird gestellt, um zu erfassen ob der kontinuierliche "
                                                    "Aufwand der ML Use Cases in den Gesamtaufwand eingerechnet werden "
                                                    "muss oder nicht.")
 
@@ -133,7 +133,7 @@ data_2_consequence = "Falls Sie mit 'Nein' auf diese Frage antworten, wird Ihnen
                      "welche diese Daten benötigen."
 data_2_reason_to_exist = "Die Frage nach Sensorik wird gestellt, um die grundsätzliche Möglichkeit zur Erfassung der " \
                          "Daten abzufragen und den Sensorinstallationsaufwand abzuschätzen."
-data_3_description = "Diese Frage wird als letzte Frage der Ausschlusskette für ML Use Cases gestellt, welche diese" \
+data_3_description = "Diese Frage wird als letzte Frage der Ausschlusskette für ML Use Cases gestellt, welche diese " \
                      "Daten benötigen."
 data_3_consequence = "Falls Sie nicht dazu bereit sind diese Daten zu erheben, werden Use Cases von der Bewertung " \
                      "ausgeschlossen, welche diese benötigen. Für alle anderen Use Cases bleibt der Aufwand " \
@@ -477,7 +477,7 @@ cat_1_access_rights = Question(name="Zugriffsrechte",
                                description_text=risk_1_description,
                                consequence_description="Wenn diese Frage mit 'Nein' beantwortet wird, steigt das "
                                                        "Umsetzungsrisiko für ML Use Cases in der Kategorie "
-                                                       "Wärmebedarfsprognosen",
+                                                       "Wärmebedarfsprognosen.",
                                reason_to_exist="Diese Frage wird gestellt, um das Umsetzungsrisiko für ML Use Cases in "
                                                "der Kategorie 'Wärmebedarfsprognosen' einschätzen zu können."
                                )
@@ -491,7 +491,7 @@ cat_1_transparency = Question(name="Transparenz",
                               description_text=risk_2_description,
                               consequence_description="Wenn diese Frage mit 'Ja' beantwortet wird, steigt das "
                                                       "Umsetzungsrisiko für ML Use Cases in der Kategorie "
-                                                      "Wärmebedarfsprognosen",
+                                                      "Wärmebedarfsprognosen.",
                               reason_to_exist="Diese Frage wird gestellt, um das Umsetzungsrisiko für ML Use Cases in "
                                               "der Kategorie 'Wärmebedarfsprognosen' einschätzen zu können."
                               )
@@ -505,7 +505,7 @@ cat_1_resistance = Question(name="Widerstand",
                             description_text=risk_3_description,
                             consequence_description="Wenn diese Frage mit 'Ja' beantwortet wird, steigt das "
                                                     "Umsetzungsrisiko für ML Use Cases in der Kategorie "
-                                                    "Wärmebedarfsprognosen",
+                                                    "Wärmebedarfsprognosen.",
                             reason_to_exist="Diese Frage wird gestellt, um das Umsetzungsrisiko für ML Use Cases in "
                                             "der Kategorie 'Wärmebedarfsprognosen' einschätzen zu können."
                             )
@@ -559,7 +559,7 @@ cat_1_building_data = Question(name="Detaildaten Gebäude",
                                description_text="ML Use Cases für Wärmebedarfsprognosen können aktuelle "
                                                 "Metadaten zu Gebäuden benötigen, welche an das Fernwärmenetz "
                                                 "angeschlossen sind. Da eine detaillierte Abfrage der einzelnen "
-                                                "Merkmale die Komplexität zu stark erhöhen würde, werden diese hier"
+                                                "Merkmale die Komplexität zu stark erhöhen würde, werden diese hier "
                                                 "gesammelt abgefragt.",
                                consequence_description="Falls diese Daten nicht vorhanden sind, können ML Use Cases,"
                                                        "welche diese Daten benötigen nicht angewandt werden und "
@@ -670,11 +670,11 @@ cat_2_substation_amount = Question(name="Anzahl HAST",
                                             f"{min_substations_for_clustering} oder mehr"],
                                    multiple_choice=False,
                                    question_types=["Specification"],
-                                   description_text="Einige ML Use Cases sind erst dann sinnvoll umzusetzen, wenn eine"
+                                   description_text="Einige ML Use Cases sind erst dann sinnvoll umzusetzen, wenn eine "
                                                     "größere Anzahl an Hausstationen analysiert werden soll.",
                                    consequence_description=f"Falls weniger als {min_substations_for_clustering} "
                                                            f"Hausstationen verfügbar sind, werden ML Use Cases "
-                                                           f"ausgeschlossen, welche eine große Anzahl an Hausstationen"
+                                                           f"ausgeschlossen, welche eine große Anzahl an Hausstationen "
                                                            f"benötigen, um sinnvolle Modelle zu erstellen.",
                                    reason_to_exist="Überprüfung der Umsetzungsvoraussetzungen für einige ML Use Cases."
                                    )
@@ -686,11 +686,11 @@ cat_2_labels_1 = Question(name="Labels HAST verfügbar",
                           question_types=["Specification"],
                           consequence_triggers={"Ja": "Labels HAST Art", "Nein": "Labels HAST erheben"},
                           description_text="ML Use Cases zur Instandhaltung von Hausstationen können historische "
-                                           "Informationen zu Schäden, Fehlern und Ausfällen für die Modellerstellung"
+                                           "Informationen zu Schäden, Fehlern und Ausfällen für die Modellerstellung "
                                            "oder die Validierung benötigen.",
-                          consequence_description="Falls keine Fehlerinformationen oder Ähnliches vorliegen, wird eine"
+                          consequence_description="Falls keine Fehlerinformationen oder Ähnliches vorliegen, wird eine "
                                                   "Folgefrage zur Erhebung dieser Informationen gestellt. Falls Sie "
-                                                  "bereits über diese Informationen verfügen, wird eine Folgefrage zur"
+                                                  "bereits über diese Informationen verfügen, wird eine Folgefrage zur "
                                                   "Art der Daten gestellt.",
                           reason_to_exist="Überprüfung der Umsetzungsvoraussetzungen für einige ML Use Cases und "
                                           "Einschätzung des Datenerhebungsaufwands."
@@ -705,7 +705,7 @@ cat_2_labels_2 = Question(name="Labels HAST erheben",
                           criteria="Datenerhebungsaufwand",
                           description_text=data_3_description,
                           consequence_description="Falls Sie keine Fehlerinformationen für einen ML Use Case erheben "
-                                                  "wollen, scheiden Use Cases, welche diese Daten benötigen aus der"
+                                                  "wollen, scheiden Use Cases, welche diese Daten benötigen aus der "
                                                   "Bewertung aus. Falls Sie mit 'Ja' auf diese Frage antworten, steigt"
                                                   "der Datenerhebungsaufwands für Use Cases, welche diese Daten "
                                                   "benötigen.",
@@ -725,7 +725,7 @@ cat_2_labels_3 = Question(name="Labels HAST Art",
                           multiple_choice=False,
                           question_types=["Effort"],
                           criteria="Datenerhebungsaufwand",
-                          description_text="Die Art der Instandhaltungsdaten oder Fehlerinformationen hat einen großen"
+                          description_text="Die Art der Instandhaltungsdaten oder Fehlerinformationen hat einen großen "
                                            "Einfluss auf den Datenerhebungsaufwand.",
                           consequence_description="Liegen die Daten in Form von Dokumenten vor, steigt der "
                                                   "Datenerhebungsaufwand deutlich. Im Falle von digitalisierten "
@@ -811,11 +811,11 @@ cat_3_labels_1 = Question(name="Labels Rohrnetz verfügbar",
                           question_types=["Specification"],
                           consequence_triggers={"Ja": "Labels Rohrnetz Art", "Nein": "Labels Rohrnetz erheben"},
                           description_text="ML Use Cases zur Instandhaltung des Rohrleitungsnetzes können historische "
-                                           "Informationen zu Schäden, Fehlern und Ausfällen für die Modellerstellung"
+                                           "Informationen zu Schäden, Fehlern und Ausfällen für die Modellerstellung "
                                            "oder die Validierung benötigen.",
-                          consequence_description="Falls keine Fehlerinformationen oder Ähnliches vorliegen, wird eine"
+                          consequence_description="Falls keine Fehlerinformationen oder Ähnliches vorliegen, wird eine "
                                                   "Folgefrage zur Erhebung dieser Informationen gestellt. Falls Sie "
-                                                  "bereits über diese Informationen verfügen, wird eine Folgefrage zur"
+                                                  "bereits über diese Informationen verfügen, wird eine Folgefrage zur "
                                                   "Art der Daten gestellt.",
                           reason_to_exist="Überprüfung der Umsetzungsvoraussetzungen für einige ML Use Cases und "
                                           "Einschätzung des Datenerhebungsaufwands."
@@ -830,8 +830,8 @@ cat_3_labels_2 = Question(name="Labels Rohrnetz erheben",
                           criteria="Datenerhebungsaufwand",
                           description_text=data_3_description,
                           consequence_description="Falls Sie keine Fehlerinformationen für einen ML Use Case erheben "
-                                                  "wollen, scheiden Use Cases, welche diese Daten benötigen aus der"
-                                                  "Bewertung aus. Falls Sie mit 'Ja' auf diese Frage antworten, steigt"
+                                                  "wollen, scheiden Use Cases, welche diese Daten benötigen aus der "
+                                                  "Bewertung aus. Falls Sie mit 'Ja' auf diese Frage antworten, steigt "
                                                   "der Datenerhebungsaufwands für Use Cases, welche diese Daten "
                                                   "benötigen.",
                           reason_to_exist="Überprüfung der Umsetzungsvoraussetzungen für einige ML Use Cases und "
@@ -850,7 +850,7 @@ cat_3_labels_3 = Question(name="Labels Rohrnetz Art",
                           multiple_choice=False,
                           question_types=["Effort"],
                           criteria="Datenerhebungsaufwand",
-                          description_text="Die Art der Instandhaltungsdaten oder Fehlerinformationen hat einen großen"
+                          description_text="Die Art der Instandhaltungsdaten oder Fehlerinformationen hat einen großen "
                                            "Einfluss auf den Datenerhebungsaufwand.",
                           consequence_description="Liegen die Daten in Form von Dokumenten vor, steigt der "
                                                   "Datenerhebungsaufwand deutlich. Im Falle von digitalisierten "
@@ -918,9 +918,9 @@ cat_3_pipeline_depth = Question(name="Rohrnetztiefe",
                                 multiple_choice=False,
                                 question_types=["Specification"],
                                 description_text="Die Tiefe des Rohrnetzes ist insbesondere für basierte ML Use Cases "
-                                                 "zur Instandhaltung des Rohrnetzes ein entscheidender Faktor, wenn"
+                                                 "zur Instandhaltung des Rohrnetzes ein entscheidender Faktor, wenn "
                                                  "es um die Machbarkeit des Use Cases geht.",
-                                consequence_description="Falls die Rohre zu tief verlegt sind, um bspw. bildbasierte"
+                                consequence_description="Falls die Rohre zu tief verlegt sind, um bspw. bildbasierte "
                                                         "ML Use Cases umzusetzen, werden diese von der Bewertung "
                                                         "ausgeschlossen.",
                                 reason_to_exist="Überprüfung der Umsetzungsvoraussetzungen für einige ML Use "
@@ -935,7 +935,7 @@ cat_3_network_topology = Question(name="Rohrnetztopologie",
                                   description_text="ML Use Cases für Instandhaltung des Rohrnetzes können diverse "
                                                    "Metadaten zur Netztopologie benötigen. "
                                                    "Da eine detaillierte Abfrage der einzelnen "
-                                                   "Merkmale die Komplexität zu stark erhöhen würde, werden diese hier"
+                                                   "Merkmale die Komplexität zu stark erhöhen würde, werden diese hier "
                                                    "gesammelt abgefragt.",
                                   consequence_description="Falls diese Daten nicht vorhanden sind, können ML Use Cases,"
                                                           "welche diese Daten benötigen nicht angewandt werden und "
@@ -1026,7 +1026,7 @@ cat_4_network_topology = Question(name="Fernwärmenetztopologie",
                                   description_text="ML Use Cases zu Betriebsstrategien für das Fernwärmenetz können "
                                                    "diverse Metadaten zur Netztopologie benötigen. "
                                                    "Da eine detaillierte Abfrage der einzelnen "
-                                                   "Merkmale die Komplexität zu stark erhöhen würde, werden diese hier"
+                                                   "Merkmale die Komplexität zu stark erhöhen würde, werden diese hier "
                                                    "gesammelt abgefragt.",
                                   consequence_description="Falls diese Daten nicht vorhanden sind, können ML Use Cases,"
                                                           "welche diese Daten benötigen nicht angewandt werden und "
