@@ -232,3 +232,28 @@ class Questionnaire:
                 category_scores[final_criteria] += value
             category_scores[final_criteria] /= len(global_criteria_mapping[final_criteria])
         return category_scores
+
+    def get_category_of_use_case(self, use_case: UseCase) -> Category:
+        """ Searches for the category where use_case is contained in the use_cases list. Raises a ValueError if the
+        use case was not found or if it is ambiguous.
+
+        Args:
+            use_case (UseCase): Use case object for which the corresponding category is searched.
+
+        Returns:
+            (Category): Corresponding category
+        """
+        matching_category = None
+        matching_use_cases = 0
+        for cat in self.categories:
+            for uc in cat.use_cases:
+                if uc.name == use_case.name:
+                    matching_use_cases += 1
+                    matching_category = cat
+        if matching_use_cases == 1:
+            return matching_category
+        elif matching_use_cases == 0:
+            raise ValueError(f"Use case {use_case.name} can not be found in any category!")
+        else:
+            raise ValueError(f"The Use case name {use_case.name} was found more than once. Please make sure, that the"
+                             f"use case name is unique.")

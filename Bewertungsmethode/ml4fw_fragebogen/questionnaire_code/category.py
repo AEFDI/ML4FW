@@ -209,3 +209,14 @@ class Category:
         self.potential_questions = [q for q in question_list if "Potential" in q.type]
         self.effort_questions = [q for q in question_list if "Effort" in q.type]
         self.risk_questions = [q for q in question_list if "Risk" in q.type]
+
+    def get_risk_minimization_text(self) -> str:
+        """ Determines risk minimization recommendations based on user answers for category risk questions.
+
+        Returns:
+            (str): risk minimization text
+        """
+        # TODO: implement
+        risk_questions = self.risk_questions
+        risk_minimization_text = str(risk_questions)
+        return risk_minimization_text

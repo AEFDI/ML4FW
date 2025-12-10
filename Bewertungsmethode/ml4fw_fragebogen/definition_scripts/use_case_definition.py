@@ -79,7 +79,11 @@ c1_uc1 = UseCase(name="Wärmelastprognosen anhand detaillierter Netzdaten",
                                                "(local interpretable model-agnostic explanations)"],
                                        "contra": ["Sehr rechenintensiv",
                                                   "Hohe Implementierungskomplexität"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c1_uc2 = UseCase(name="Wärmelastprognose für Fernwärmenetze mit Berücksichtigung der Netzstruktur",
@@ -109,7 +113,11 @@ c1_uc2 = UseCase(name="Wärmelastprognose für Fernwärmenetze mit Berücksichti
                                        "contra": ["Sehr komplexe Implementierung",
                                                   "Hoher Rechenaufwand",
                                                   "Komplexe Datenbeschaffung"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c1_uc3 = UseCase(name="Wärmelastprognose für einzelne Gebäude und Stadtviertel",
@@ -140,7 +148,11 @@ c1_uc3 = UseCase(name="Wärmelastprognose für einzelne Gebäude und Stadtvierte
                                        "contra": ["Mittlere Prognosegüte",
                                                   "Keine komplexen Zusammenhänge modellierbar",
                                                   "Nicht echtzeitfähig"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c1_uc4 = UseCase(name="Echtzeitprognose für Wärmelasten in Fernwärmenetzen",
@@ -169,7 +181,11 @@ c1_uc4 = UseCase(name="Echtzeitprognose für Wärmelasten in Fernwärmenetzen",
                                        "contra": ["Hoher Rechenaufwand",
                                                   "Sehr komplexe Implementierung",
                                                   "Komplexe Datenbeschaffung"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c1_uc5 = UseCase(name="Prognose für Wärmespeicher und Spitzenlastmanagement",
@@ -197,7 +213,11 @@ c1_uc5 = UseCase(name="Prognose für Wärmespeicher und Spitzenlastmanagement",
                                        "contra": ["Hoher Rechenaufwand",
                                                   "Sehr komplexe Implementierung",
                                                   "Erfordert umfangreiche Sensordaten"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c1_uc6 = UseCase(name="Haushaltsbezogene Wärmelastprognose für individuelle Gebäude",
@@ -225,7 +245,11 @@ c1_uc6 = UseCase(name="Haushaltsbezogene Wärmelastprognose für individuelle Ge
                                        "contra": ["Nicht gut skalierbar",
                                                   "Benötigt manuelle Auswahl von Datenmerkmalen",
                                                   "Nicht Echtzeitfähig"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 cat_1_use_case: List[UseCase] = [c1_uc1, c1_uc2, c1_uc3, c1_uc4, c1_uc5, c1_uc6]
@@ -264,7 +288,11 @@ c2_uc1 = UseCase(name="Anomalieerkennung durch Ensemblemodellierung",
                                        "contra": ["Komplexes Modell mit vielen Komponenten",
                                                   "Potenziell hohe Rechenaufwand",
                                                   "Daten von sehr vielen HASTs werden benötigt"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c2_uc2 = UseCase(name="Anomalieerkennung mithilfe von Clusteringmethoden",
@@ -295,7 +323,11 @@ c2_uc2 = UseCase(name="Anomalieerkennung mithilfe von Clusteringmethoden",
                  pro_contra_arguments={"pro": ["Niedrige Modellkomplexität",
                                                "Geringer Rechenaufwand"],
                                        "contra": ["Daten von vielen HASTs werden benötigt",
-                                                  "Frühzeitige Fehlererkennung ist nicht möglich"]}
+                                                  "Frühzeitige Fehlererkennung ist nicht möglich"]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c2_uc3 = UseCase(name="Rekonstruktionsbasierte Normalverhaltensmodelle",
@@ -334,7 +366,11 @@ c2_uc3 = UseCase(name="Rekonstruktionsbasierte Normalverhaltensmodelle",
                                                   "Die Auswahl des Trainingsdatensatzes beeinflusst die Performanz "
                                                   "entscheidend",
                                                   "Unbekanntes Normalverhalten kann als Fehler identifiziert werden"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c2_uc4 = UseCase(name="Regressionsbasierte Normalverhaltensmodelle",
@@ -373,7 +409,11 @@ c2_uc4 = UseCase(name="Regressionsbasierte Normalverhaltensmodelle",
                                                   "Die Auswahl des Trainingsdatensatzes beeinflusst die Performanz "
                                                   "entscheidend",
                                                   "Unbekanntes Normalverhalten kann als Fehler identifiziert werden"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 cat_2_use_cases: List[UseCase] = [c2_uc1, c2_uc2, c2_uc3, c2_uc4]
@@ -407,7 +447,11 @@ c3_uc1 = UseCase(name="Leckagenerkennung auf Basis von Infrarotbildern",
                                            "Leckagen in tieferliegenden Rohrnetzen können nicht erkannt werden",
                                            "Eine kontinuierliche Überwachung des Rohrnetzes ist sehr aufwändig",
                                            "Frühzeitige Erkennung von Leckagen ist nicht möglich"
-                                       ]}
+                                       ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c3_uc2 = UseCase(name="Leckagenerkennung auf Basis von Drucksensorik",
@@ -444,7 +488,11 @@ c3_uc2 = UseCase(name="Leckagenerkennung auf Basis von Drucksensorik",
                                                   "Daten bezüglich Netztopologie werden benötigt",
                                                   "Historische Daten werden benötigt",
                                                   "Kleine Leckagen oder Schwachstellen werden selten erkannt"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c3_uc3 = UseCase(name="Klassifikation von Rohrzuständen auf Basis von Akustik- und Vibrationssignalen",
@@ -479,7 +527,11 @@ c3_uc3 = UseCase(name="Klassifikation von Rohrzuständen auf Basis von Akustik- 
                                                   "Eine sehr hohe Auflösung der Daten wird benötigt",
                                                   "Historische Daten werden benötigt",
                                                   "Viele Fehlalarme sind möglich"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 cat_3_use_cases: List[UseCase] = [c3_uc1, c3_uc2, c3_uc3]
@@ -519,7 +571,11 @@ c4_uc1 = UseCase(name="Optimierung des Netzbetriebs mithilfe ML-basierter Netzsi
                                                   "Hohe Modellkomplexität",
                                                   "Daten aus der Wärmeerzeugung werden benötigt",
                                                   "Nutzerkomfort wird nicht mit einbezogen"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c4_uc2 = UseCase(name="Spitzenlastreduzierung",
@@ -555,7 +611,11 @@ c4_uc2 = UseCase(name="Spitzenlastreduzierung",
                                                   "Fernwärmenetzes werden benötigt",
                                                   "Hohe Modellkomplexität",
                                                   "Hohe Rechenkosten für das Modelltraining",
-                                                  "Fernwärmenetz muss modelliert werden"]}
+                                                  "Fernwärmenetz muss modelliert werden"]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 c4_uc3 = UseCase(name="Flexibilitätsnutzung von Gebäuden durch die Steuerung der Wärmezufuhr",
                  description="In diesem Use Case wird ein Reinforcement Learning Algorithmus verwendet, um "
@@ -589,7 +649,11 @@ c4_uc3 = UseCase(name="Flexibilitätsnutzung von Gebäuden durch die Steuerung d
                                                   "benötigt",
                                                   "Daten zur Gebäudehülle werden benötigt",
                                                   "Physikalische Simulationen sind notwendig"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c4_uc4 = UseCase(name="ML-Ersatzmodell für thermo-hydraulische Simulationen",
@@ -622,7 +686,11 @@ c4_uc4 = UseCase(name="ML-Ersatzmodell für thermo-hydraulische Simulationen",
                                        "contra": ["Thermo-hydraulische Simulation des Netzes wird für das Training "
                                                   "benötigt."
                                                   "Viele Metadaten sind notwendig."
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 cat_4_use_cases: List[UseCase] = [c4_uc1, c4_uc2, c4_uc3, c4_uc4]
@@ -660,7 +728,11 @@ c5_uc1 = UseCase(name="ML-unterstützte Regleroptimierung",
                                                "aufwändig"],
                                        "contra": ["Aufwändige Simulation als Grundlage",
                                                   "Detaillierte Metadaten von mehreren HAST Komponenten werden benötigt"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 c5_uc2 = UseCase(name="ML-basierte Optimierung von Fernwärme Sekundärkreisen",
@@ -694,7 +766,11 @@ c5_uc2 = UseCase(name="ML-basierte Optimierung von Fernwärme Sekundärkreisen",
                                                ],
                                        "contra": ["Viele verschieden Daten aus verschiedenen Quellen werden benötigt",
                                                   "Daten aus Wettervorhersagen werden benötigt"
-                                                  ]}
+                                                  ]},
+                 benefit_definition_text="",  # TODO
+                 kpi_dict={},  # TODO
+                 data_akquisition_texts=[{}],  # TODO
+                 test_phase_text=""  # TODO
                  )
 
 cat_5_use_cases: List[UseCase] = [c5_uc1, c5_uc2]

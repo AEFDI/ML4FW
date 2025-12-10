@@ -20,7 +20,7 @@ class ML4FWQuestionnaireApp:
     This class that provides a questionnaire for estimating potential, costs and risk of  Machine Learning applications
     in district heating network operations. The GUI which is created in this class consists of the components:
     1. **Start Menu**: Allows the user to start a new questionnaire or load a saved state.
-    2. **Options Menu**: Enables the selection of use-case categories.
+    2. **Options Menu**: Enables the selection of use case categories.
     3. **Category/Question Display Section**: Displays the current category and corresponding questions.
     4. **Displaying Category Results**: Shows the results of category analysis.
     5. **Displaying Use Case Results**: Presents the results for individual use cases.
@@ -110,7 +110,7 @@ class ML4FWQuestionnaireApp:
         self.questionnaire: Union[Questionnaire, None] = None
 
         self.master: ctk.CTk = master
-        self.master.title("Fragebogen Machine Learning Use-Cases im Betrieb von Fernwärmenetzen")
+        self.master.title("Fragebogen Machine Learning Use Cases im Betrieb von Fernwärmenetzen")
         self.master.geometry(self.window_geometry)
 
         # Theme and colors
@@ -265,7 +265,7 @@ class ML4FWQuestionnaireApp:
         self.category_result_frame = ctk.CTkFrame(master)
         self.category_plot_info_label = ctk.CTkLabel(self.category_result_frame,
                                                      text="Klicken Sie mit der Maus auf Kategorien in der Abbildung, "
-                                                          "um eine Abwägung der Use-Cases innerhalb der Kategorie zu "
+                                                          "um eine Abwägung der Use Cases innerhalb der Kategorie zu "
                                                           "erhalten.", wraplength=self.long_wrap_length,
                                                      font=self.plain_text_font)
         self.category_back_button = ctk.CTkButton(self.category_result_frame, text="Zurück",
@@ -477,20 +477,20 @@ class ML4FWQuestionnaireApp:
         3. Close button: Closes the use case result window.
 
         Args:
-            category_name (str): The name of the category whose use cases are to be displayed.
+            category_name (str): The name of the category of which the use cases are to be displayed.
 
         Returns
             CTkToplevel: use_case_result window
         """
         new_window = ctk.CTkToplevel()
-        new_window.title(f"Vergleich der Use-Cases aus Kategorie {category_name}")
+        new_window.title(f"Vergleich der Use Cases aus Kategorie {category_name}")
         new_window.geometry(self.secondary_window_geometry)
         self.use_case_result_frame = ctk.CTkFrame(new_window)
         self.use_case_result_frame.pack(pady=20)
         self.add_use_case_plot(category_name=category_name)
         self.use_case_plot_info_label = ctk.CTkLabel(self.use_case_result_frame,
-                                                     text="Klicken Sie mit der Maus auf einen Use-Case in der "
-                                                          "Abbildung, um eine Zusammenfassung des Use-Cases zu "
+                                                     text="Klicken Sie mit der Maus auf einen Use Case in der "
+                                                          "Abbildung, um eine Zusammenfassung des Use Cases zu "
                                                           "erhalten.", wraplength=self.long_wrap_length,
                                                      font=self.plain_text_font)
         self.use_case_plot_info_label.pack(pady=20)
@@ -519,7 +519,7 @@ class ML4FWQuestionnaireApp:
             category_name (str): The name of the category to which the use case belongs.
         """
         new_window = ctk.CTkToplevel(self.master)
-        new_window.title(f"Zusammenfassung für Use-Case {use_case_name}")
+        new_window.title(f"Zusammenfassung für Use Case {use_case_name}")
         new_window.geometry(self.secondary_window_geometry)
 
         use_case = self.questionnaire.get_use_case(use_case_name=use_case_name, category_name=category_name)
@@ -541,13 +541,19 @@ class ML4FWQuestionnaireApp:
             self.display_reason_for_non_applicability(frame=summary_frame, use_case=use_case)
 
         # Pro and contra table
-        pro_con_table_label = ctk.CTkLabel(master=summary_frame, text="Pro und Kontra Argumente für diesen Use-Case:",
+        pro_con_table_label = ctk.CTkLabel(master=summary_frame, text="Pro und Kontra Argumente für diesen Use Case:",
                                            wraplength=self.long_wrap_length, font=self.plain_text_font)
         pro_con_table_label.pack(pady=20)
         self.display_pro_contra_table(frame=summary_frame, use_case=use_case)
 
+        # Action recommendations
+        action_recommendation_button = ctk.CTkButton(summary_frame, text="Handlungsempfehlungen anzeigen",
+                                                     command=lambda: self.display_action_recommendation_window(
+                                                         use_case=use_case))
+        action_recommendation_button.pack(pady=20)
+
         # Literature
-        source_text = "Literaturquelle für diesen Use-Case: " + use_case.literature_source
+        source_text = "Literaturquelle für diesen Use Case: " + use_case.literature_source
         source_label = ctk.CTkLabel(master=summary_frame, text=source_text, wraplength=self.long_wrap_length,
                                     font=self.plain_text_font)
         source_label.pack(pady=20)
@@ -561,12 +567,12 @@ class ML4FWQuestionnaireApp:
 
         Args:
             frame (ctk.CTkFrame): The frame where the reasons will be displayed.
-            use_case (UseCase): The use case whose reasons will be displayed.
+            use_case (UseCase): The use case of which the reasons will be displayed.
         """
         reason_list = use_case.reasons_for_non_applicability
-        msg = f"Use-Case {use_case.name} ist nicht anwendbar \n"
-        for i, reason in enumerate(reason_list):
-            last_question = reason[-1]
+        msg = f"Use Case {use_case.name} ist nicht anwendbar \n"
+        for i, reasons in enumerate(reason_list):
+            last_question = reasons[-1]
             question_text = list(last_question.keys())[0]
             answer = last_question[question_text]
             msg += f"Grund {i + 1}: " + f"Antwort '{answer}' " + f"auf die Frage '{question_text}'\n"
@@ -579,7 +585,7 @@ class ML4FWQuestionnaireApp:
 
         Args:
             frame (ctk.CTkFrame): The frame where the table will be displayed.
-            use_case (UseCase): The use case whose contents will be displayed.
+            use_case (UseCase): The use case of which the contents will be displayed.
         """
         # define a new frame within the main frame
         pro_contra_frame = ctk.CTkFrame(frame)
@@ -623,6 +629,72 @@ class ML4FWQuestionnaireApp:
         # Configure grid weights to make it responsive
         for j in range(len(headers)):
             pro_contra_frame.grid_columnconfigure(j, weight=1)
+
+    def display_action_recommendation_window(self, use_case: UseCase) -> None:
+        """ Creates a new window to show action recommendations for the given use case in markdown-format.
+
+        Args:
+            use_case (UseCase): The use case of which the action recommendations will be displayed.
+
+        Returns:
+            None
+        """
+        new_window = ctk.CTkToplevel(self.master)
+        new_window.title(f"Handlungsempfehlungen {use_case.name}")
+        new_window.geometry(self.secondary_window_geometry)
+
+        action_recommendation_frame = ctk.CTkFrame(new_window)
+        action_recommendation_frame.pack(pady=20)
+
+        action_recommendation_label = ctk.CTkLabel(master=action_recommendation_frame,
+                                                   text="Handlungsempfehlung für die weitere Prüfung dieses Use Cases:",
+                                                   wraplength=self.long_wrap_length, font=self.head_line_font)
+        action_recommendation_label.pack(pady=20)
+        self.display_action_recommendations(frame=action_recommendation_frame, use_case=use_case)
+
+        action_recommendation_close_button = ctk.CTkButton(action_recommendation_frame, text="Fenster schließen",
+                                                           command=new_window.destroy)
+        action_recommendation_close_button.pack(pady=20)
+
+    def display_action_recommendations(self, frame: ctk.CTkFrame, use_case: UseCase) -> None:
+        """ Displays action recommendations in markdown-format in the given frame
+
+        Args:
+            frame (ctk.CTkFrame): The frame where the action recommendations will be displayed.
+            use_case (UseCase): The use case of which the action recommendations will be displayed.
+
+        Returns:
+            None
+        """
+        category = self.questionnaire.get_category_of_use_case(use_case=use_case)
+
+        # What should the use case fulfill?
+        benefit_definition_text = use_case.get_benefit_definition_text()
+
+        # KPIs
+        kpi_text = use_case.get_kpi_text()
+
+        # Risk minimization
+        risk_minimization_text = category.get_risk_minimization_text()
+
+        # Data akquisition
+        data_akquisition_text = use_case.get_data_akquisition_text()
+
+        # Testing Phase of the Use Case
+        test_phase_text = use_case.get_test_phase_text()
+
+        # TODO: implement
+        recommendation_text = "1. " + benefit_definition_text + "\n"
+        recommendation_text += "2. " + kpi_text + "\n"
+        recommendation_text += "3. " + risk_minimization_text + "\n"
+        recommendation_text += "4. " + data_akquisition_text + "\n"
+        recommendation_text += "5. " + test_phase_text
+        recommendation_label = ctk.CTkLabel(frame,
+                                            text=recommendation_text,
+                                            wraplength=self.long_wrap_length,
+                                            font=self.plain_text_font,
+                                            justify="left")
+        recommendation_label.pack(pady=20)
 
     # Update screens
     def update_category_display(self) -> None:
@@ -861,7 +933,7 @@ class ML4FWQuestionnaireApp:
         if not os.path.isdir(self.result_directory):  # check if dir exists just to be sure
             os.mkdir(self.result_directory)
 
-        file_name = os.path.join(self.result_directory, f"{category_name} Use-Case Vergleich.png")
+        file_name = os.path.join(self.result_directory, f"{category_name} Use Case Vergleich.png")
         self.use_case_figure.savefig(file_name, dpi=300)
         save_successful_label = ctk.CTkLabel(frame, text="Grafik erfolgreich gespeichert!")
         save_successful_label.pack(pady=10)
@@ -992,7 +1064,7 @@ class ML4FWQuestionnaireApp:
         effort ("Aufwand") on the x-axis and risk ("Risiko") as the color of the scatter points.
 
         Args:
-            is_category (bool): Determines whether this is a category plot or a use-case plot.
+            is_category (bool): Determines whether this is a category plot or a use case plot.
             category_name (str, optional): The name of the category (only expected if is_category=False).
 
         Returns:
@@ -1006,7 +1078,7 @@ class ML4FWQuestionnaireApp:
         else:
             score_dict = self.questionnaire.final_use_case_scores[category_name]
             short_name_prefix = "UC"
-            title = f"{category_name} Use-Case Vergleich"
+            title = f"{category_name} Use Case Vergleich"
 
         figure, ax = plt.subplots(figsize=(8, 4))
         ax.grid(zorder=1)

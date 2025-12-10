@@ -17,6 +17,12 @@ class UseCase:
         pro_contra_arguments (Dict[str, list]): A dictionary containing pro and contra arguments for the use case.
         literature_source (str): The source of literature related to the use case.
         description (str): A description of the use case.
+        benefit_definition_text (str): A string recommending a definition of the benefit of the use case.
+        kpi_dict (dict): A dictionary containing kpi-names as keys and descriptions as values.
+        data_akquisition_texts (List[Dict[str, str]]): A list of dictionaries describing which data feature is needed in
+            what resolution.
+        test_phase_text (str): A string recommending a test phase for the use case.
+
 
     Attributes:
         is_applicable (bool or None): Indicates whether the use case is applicable (set after evaluation).
@@ -43,7 +49,9 @@ class UseCase:
 
     def __init__(self, name: str, predefined_potential: Dict[str, int], predefined_effort: Dict[str, int],
                  predefined_risk_value: int, non_applicability_conditions: List[Condition],
-                 pro_contra_arguments: Dict[str, list], literature_source: str, description: str):
+                 pro_contra_arguments: Dict[str, list], literature_source: str, description: str,
+                 benefit_definition_text: str, kpi_dict: dict, data_akquisition_texts: List[Dict[str, str]],
+                 test_phase_text: str):
         """ Initializes the UseCase object and its attributes. """
         self.name: str = name
         self.description: str = description
@@ -53,6 +61,10 @@ class UseCase:
         self.non_applicability_conditions: List[Condition] = non_applicability_conditions
         self.literature_source: str = literature_source
         self.pro_contra_arguments: Dict[str, list] = pro_contra_arguments
+        self.benefit_definition_text: str = benefit_definition_text
+        self.kpi_dict: dict = kpi_dict
+        self.data_akquisition_texts: List[Dict[str, str]] = data_akquisition_texts
+        self.test_phase_text: str = test_phase_text
 
         # Applicability attributes will be set after the questions in questionnaire have been evaluated
         self.is_applicable: bool = False
@@ -112,6 +124,46 @@ class UseCase:
             float: The calculated risk value for the use case.
         """
         return (category_risk + self.predefined_risk_value) / 2
+
+    def get_benefit_definition_text(self) -> str:
+        """
+
+        Returns:
+
+        """
+        # TODO: Implement
+        benefit_definition_text = str(self.benefit_definition_text)
+        return benefit_definition_text
+
+    def get_kpi_text(self) -> str:
+        """
+
+        Returns:
+
+        """
+        # TODO: Implement
+        kpi_text = str(self.kpi_dict)
+        return kpi_text
+
+    def get_data_akquisition_text(self) -> str:
+        """
+
+        Returns:
+
+        """
+        # TODO: Implement
+        data_akquisition_text = str(self.data_akquisition_texts)
+        return data_akquisition_text
+
+    def get_test_phase_text(self) -> str:
+        """
+
+        Returns:
+
+        """
+        # TODO: Implement
+        test_phase_text = str(self.test_phase_text)
+        return test_phase_text
 
     def is_not_applicable(self, all_category_questions: List[Question]) -> bool:
         """ Checks if the use case is not applicable based on its non-applicability conditions.
